@@ -1,0 +1,34 @@
+
+-- 1. Nombre total de médicaments importés
+SELECT 
+    COUNT(*) as "Total médicaments importés",
+    COUNT(DISTINCT manufacturer) as "Nombre de fabricants",
+    COUNT(CASE WHEN is_active = true THEN 1 END) as "Médicaments actifs",
+    COUNT(CASE WHEN requires_prescription = true THEN 1 END) as "Avec prescription"
+FROM medications;
+
+-- 2. Les 10 derniers médicaments importés
+SELECT 
+    name as "Nom",
+    manufacturer as "Fabricant",
+    pharmaceutical_form as "Forme",
+    dosage as "Dosage",
+    created_at as "Importé le"
+FROM medications
+ORDER BY created_at DESC
+LIMIT 10;
+
+-- 3. Top 10 des fabricants
+SELECT 
+    manufacturer as "Fabricant",
+    COUNT(*) as "Nombre de médicaments"
+FROM medications
+GROUP BY manufacturer
+ORDER BY COUNT(*) DESC
+LIMIT 10;
+
+-- 4. Import dans les dernières 60 secondes
+SELECT 
+    COUNT(*) as "Importés dans la dernière minute"
+FROM medications
+WHERE created_at >= NOW() - INTERVAL '60 seconds';

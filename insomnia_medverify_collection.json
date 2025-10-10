@@ -1,0 +1,158 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "resources": [
+    {
+      "_type": "request_group",
+      "name": "MedVerify API",
+      "description": "Collection complète pour tester l'API MedVerify"
+    },
+    {
+      "_type": "request",
+      "name": "Login Admin",
+      "method": "POST",
+      "url": "http://localhost:8080/api/v1/auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@medverify.gw\",\n  \"password\": \"Admin@123456\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_type": "request",
+      "name": "Register User",
+      "method": "POST",
+      "url": "http://localhost:8080/api/v1/auth/register",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"patient@test.gw\",\n  \"password\": \"Test@123456\",\n  \"firstName\": \"Patient\",\n  \"lastName\": \"Test\",\n  \"phone\": \"+245987654321\",\n  \"role\": \"PATIENT\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_type": "request",
+      "name": "Verify Medication - Authentic",
+      "method": "POST",
+      "url": "http://localhost:8080/api/v1/medications/verify",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"gtin\": \"03401234567890\",\n  \"serialNumber\": \"SERIAL001\",\n  \"batchNumber\": \"LOT2024A123\",\n  \"expiryDate\": \"2025-12-31\",\n  \"location\": {\n    \"type\": \"Point\",\n    \"coordinates\": [-15.5989, 11.8632]\n  }\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer VOTRE_TOKEN_ICI"
+        }
+      ]
+    },
+    {
+      "_type": "request",
+      "name": "Verify - Duplicate Serial (x6)",
+      "method": "POST",
+      "url": "http://localhost:8080/api/v1/medications/verify",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"gtin\": \"03401234567890\",\n  \"serialNumber\": \"DUPLICATE_TEST\",\n  \"batchNumber\": \"LOT2024A123\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer VOTRE_TOKEN_ICI"
+        }
+      ]
+    },
+    {
+      "_type": "request",
+      "name": "Create Report - Counterfeit",
+      "method": "POST",
+      "url": "http://localhost:8080/api/v1/reports",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"gtin\": \"03401234567890\",\n  \"serialNumber\": \"FAKE123\",\n  \"reportType\": \"COUNTERFEIT\",\n  \"description\": \"Emballage suspect : couleur différente, fautes d'orthographe sur la boîte, goût bizarre du comprimé.\",\n  \"purchaseLocation\": {\n    \"type\": \"Point\",\n    \"coordinates\": [-15.5989, 11.8632]\n  },\n  \"photos\": [\n    \"https://example.com/photo1.jpg\",\n    \"https://example.com/photo2.jpg\"\n  ],\n  \"anonymous\": false\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer VOTRE_TOKEN_ICI"
+        }
+      ]
+    },
+    {
+      "_type": "request",
+      "name": "Dashboard Stats",
+      "method": "GET",
+      "url": "http://localhost:8080/api/v1/admin/dashboard/stats?period=30d",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer VOTRE_TOKEN_ICI"
+        }
+      ]
+    },
+    {
+      "_type": "request",
+      "name": "My Reports",
+      "method": "GET",
+      "url": "http://localhost:8080/api/v1/reports/my-reports",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer VOTRE_TOKEN_ICI"
+        }
+      ]
+    },
+    {
+      "_type": "request",
+      "name": "Search Medication",
+      "method": "GET",
+      "url": "http://localhost:8080/api/v1/medications/search?name=paracetamol",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer VOTRE_TOKEN_ICI"
+        }
+      ]
+    },
+    {
+      "_type": "request",
+      "name": "Get Medication Details",
+      "method": "GET",
+      "url": "http://localhost:8080/api/v1/medications/03401234567890",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer VOTRE_TOKEN_ICI"
+        }
+      ]
+    },
+    {
+      "_type": "request",
+      "name": "Health Check",
+      "method": "GET",
+      "url": "http://localhost:8080/actuator/health"
+    }
+  ]
+}
+

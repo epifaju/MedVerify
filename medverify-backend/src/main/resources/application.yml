@@ -1,0 +1,241 @@
+spring:
+  application:
+    name: medverify-backend
+
+  # PostgreSQL Configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/medverify
+    username: postgres
+    password: Malagueta7
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  # JPA/Hibernate Configuration
+  jpa:
+    database-platform: org.hibernate.spatial.dialect.postgis.PostgisPG95Dialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          time_zone: UTC
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+    show-sql: false
+
+  # Flyway Configuration
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
+
+  # Email Configuration (SMTP)
+  # Pour activer l'email, définissez les variables d'environnement :
+  # SMTP_USERNAME=votre@email.com
+  # SMTP_PASSWORD=votre_mot_de_passe_application_gmail
+  mail:
+    host: ${SMTP_HOST:smtp.gmail.com}
+    port: ${SMTP_PORT:587}
+    username: ${SMTP_USERNAME:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          timeout: 5000
+          connectiontimeout: 5000
+          writetimeout: 5000
+    default-encoding: UTF-8
+
+  # Jackson Configuration
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      fail-on-empty-beans: false
+    deserialization:
+      fail-on-unknown-properties: false
+    default-property-inclusion: non_null
+    time-zone: UTC
+
+# Security & JWT Configuration
+jwt:
+  secret: ${JWT_SECRET:MedVerify2025SecretKeyForJWTTokenGenerationChangeInProduction123456789}
+  expiration: 900000 # 15 minutes in milliseconds
+  refresh-expiration: 604800000 # 7 days in milliseconds
+
+# CORS Configuration
+cors:
+  allowed-origins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:19006}
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
+  allowed-headers: Authorization,Content-Type,Accept,Origin,X-Requested-With
+  exposed-headers: Authorization,X-Total-Count
+  allow-credentials: true
+  max-age: 3600
+
+# Server Configuration
+server:
+  address: 0.0.0.0 # Écouter sur toutes les interfaces (permet l'accès depuis le téléphone)
+  port: ${PORT:8080}
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+      probes:
+        enabled: true
+  health:
+    mail:
+      enabled: false # Désactiver health check email pour développement
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    com.medverify: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/medverify.log
+    max-size: 10MB
+    max-history: 30
+
+# Application Specific Configuration
+app:
+  name: MedVerify
+  version: 1.0.0
+  description: API Backend pour vérification d'authenticité de médicaments
+
+  # File Upload Configuration
+  upload:
+    max-file-size: 5MB
+    max-request-size: 10MB
+    allowed-extensions: jpg,jpeg,png,pdf
+
+  # Cache Configuration
+  cache:
+    medication-ttl: 86400 # 24 hours in seconds
+    essential-meds-ttl: 2592000 # 30 days
+
+  # Verification Configuration
+  verification:
+    duplicate-threshold: 5 # Number of scans before flagging as duplicate
+    confidence-threshold: 0.7 # Minimum confidence for AUTHENTIC status
+
+  # Notification Configuration
+  notification:
+    authority-emails: ${AUTHORITY_EMAILS:admin@medverify.gw}
+    suspicious-alert-enabled: true
+
+# External API Configuration
+external-api:
+  # API-Medicaments.fr (Base de données publique française)
+  medicaments:
+    base-url: https://medicamentsapi.giygas.dev
+    timeout: 5000 # 5 secondes
+    enabled: false # Désactivé car l'API ne supporte pas la recherche par GTIN
+
+  # BDPM Import Configuration
+  bdpm:
+    base-url: https://medicamentsapi.giygas.dev
+    import-enabled: true # Activer l'import automatique de la base BDPM
+    import-cron: "0 0 3 * * ?" # 3h du matin tous les jours
+    page-size: 10 # Taille de page de l'API
+    enabled: true
+
+  # Configuration du cache local
+  cache-ttl-days: 30 # Durée de vie du cache en jours
+
+  # Configuration retry (pour future implémentation avec Spring Retry)
+  retry:
+    max-attempts: 3
+    backoff-multiplier: 2
+
+# SpringDoc OpenAPI Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+  show-actuator: true
+
+---
+# Profile: Development
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
+    show-sql: true
+logging:
+  level:
+    com.medverify: DEBUG
+    org.springframework.security: DEBUG
+
+---
+# Profile: Test
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  flyway:
+    enabled: false
+
+---
+# Profile: Production
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    show-sql: false
+logging:
+  level:
+    root: WARN
+    com.medverify: INFO
+    org.springframework.security: WARN
