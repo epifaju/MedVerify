@@ -22,15 +22,15 @@ import java.util.UUID;
 
 /**
  * Contrôleur Admin pour la gestion des utilisateurs
- * Accessible uniquement aux ADMIN
+ * Accessible aux ADMIN et AUTHORITY
  */
 @RestController
 @RequestMapping("/api/v1/admin/users")
 @RequiredArgsConstructor
 @Slf4j
-@Tag(name = "Admin - Users", description = "Gestion des utilisateurs (ADMIN uniquement)")
+@Tag(name = "Admin - Users", description = "Gestion des utilisateurs (ADMIN et AUTHORITY)")
 @SecurityRequirement(name = "Bearer Authentication")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAnyRole('ADMIN', 'AUTHORITY')")
 public class AdminUserController {
 
     private final UserManagementService userManagementService;
@@ -154,4 +154,3 @@ public class AdminUserController {
             long newUsersLast30Days) {
     }
 }
-
