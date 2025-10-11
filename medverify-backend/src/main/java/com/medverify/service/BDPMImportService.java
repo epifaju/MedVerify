@@ -5,6 +5,7 @@ import com.medverify.entity.Medication;
 import com.medverify.integration.BDPMMedicamentMapper;
 import com.medverify.integration.dto.BDPMMedicamentResponse;
 import com.medverify.repository.MedicationRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,6 +45,27 @@ public class BDPMImportService {
     private int pageSize;
 
     private boolean isImporting = false;
+
+    /**
+     * Initialisation du service - Log de la configuration
+     */
+    @PostConstruct
+    public void init() {
+        log.info("╔════════════════════════════════════════════════════════════════╗");
+        log.info("║  📦 BDPM Import Service Initialized                           ║");
+        log.info("╠════════════════════════════════════════════════════════════════╣");
+        log.info("║  🌐 API URL: {}                                              ", baseUrl);
+        log.info("║  ⏰ Scheduled Import: {} (Enabled: {})                       ",
+                importEnabled ? "ACTIVATED" : "DISABLED", importEnabled);
+        log.info("║  🕐 Cron Schedule: 0 0 3 * * ? (3h du matin tous les jours)  ║");
+        log.info("║  📄 Page Size: {}                                            ", pageSize);
+        log.info("╚════════════════════════════════════════════════════════════════╝");
+
+        if (!importEnabled) {
+            log.warn(
+                    "⚠️  BDPM automatic import is DISABLED. Enable it in application.yml with 'external-api.bdpm.import-enabled: true'");
+        }
+    }
 
     /**
      * Importe la base BDPM complète depuis l'API
