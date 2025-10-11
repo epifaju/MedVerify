@@ -39,9 +39,9 @@ spring:
     validate-on-migrate: true
 
   # Email Configuration (SMTP)
-  # Pour activer l'email, définissez les variables d'environnement :
-  # SMTP_USERNAME=votre@email.com
-  # SMTP_PASSWORD=votre_mot_de_passe_application_gmail
+  # IMPORTANT: Ne JAMAIS mettre de vrais credentials ici !
+  # Définir les variables d'environnement ou utiliser .env
+  # Voir: CONFIG_VARIABLES_ENVIRONNEMENT.md
   mail:
     host: ${SMTP_HOST:smtp.gmail.com}
     port: ${SMTP_PORT:587}

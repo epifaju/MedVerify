@@ -1,0 +1,54 @@
+# Application Configuration Example
+# Copier ce fichier vers application.yml et remplir les valeurs
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/medverify
+    username: postgres
+    password: your_database_password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.spatial.dialect.postgis.PostgisPG95Dialect
+        format_sql: true
+
+  # Email Configuration (SMTP)
+  # IMPORTANT: Ne JAMAIS commit les vrais credentials !
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: your-email@gmail.com
+    password: your-gmail-app-password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+# JWT Configuration
+jwt:
+  secret: your-secret-key-min-256-bits
+  expiration: 900000  # 15 minutes
+  refresh-expiration: 604800000  # 7 jours
+
+# External API
+external-api:
+  bdpm:
+    base-url: https://medicamentsapi.giygas.dev
+    import-enabled: true
+    import-cron: "0 0 3 * * ?"
+    page-size: 10
+
+# App Configuration
+app:
+  verification:
+    code-expiry-minutes: 15
+    max-pending-codes: 5
+

@@ -34,6 +34,31 @@ public class EmailService {
     }
 
     /**
+     * Envoie un email générique (méthode publique)
+     */
+    @Async
+    public void sendEmail(String to, String subject, String body) {
+        if (!isEmailConfigured()) {
+            log.info("Email service not configured. Skipping email to: {}", to);
+            return;
+        }
+
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(fromEmail);
+            message.setTo(to);
+            message.setSubject(subject);
+            message.setText(body);
+
+            mailSender.send(message);
+            log.info("Email sent successfully to: {}", to);
+        } catch (Exception e) {
+            log.error("Failed to send email to: {}", to, e);
+            throw new RuntimeException("Failed to send email", e);
+        }
+    }
+
+    /**
      * Envoie un email de vérification
      */
     @Async

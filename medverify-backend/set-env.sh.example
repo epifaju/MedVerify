@@ -1,0 +1,33 @@
+#!/bin/bash
+# 🔐 Script Configuration Variables d'Environnement
+# ⚠️ COPIEZ ce fichier vers set-env.sh et remplissez VOS credentials
+# set-env.sh est dans .gitignore
+
+# Email Configuration
+export SMTP_HOST=smtp.gmail.com
+export SMTP_PORT=587
+export SMTP_USERNAME=your-email@gmail.com
+export SMTP_PASSWORD=your-gmail-app-password
+
+# JWT Configuration
+export JWT_SECRET=your-secret-key-256-bits-minimum-change-in-production
+export JWT_EXPIRATION=900000
+export JWT_REFRESH_EXPIRATION=604800000
+
+# Database Configuration
+export DB_HOST=localhost
+export DB_PORT=5432
+export DB_NAME=medverify
+export DB_USERNAME=postgres
+export DB_PASSWORD=your-database-password
+
+# External API
+export BDPM_BASE_URL=https://medicamentsapi.giygas.dev
+export BDPM_IMPORT_ENABLED=true
+
+echo "✅ Variables d'environnement configurées"
+echo "🚀 Lancement de l'application..."
+
+# Lancer l'application
+./mvnw spring-boot:run
+

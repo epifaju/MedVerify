@@ -37,6 +37,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final EmailService emailService;
+    private final EmailVerificationService emailVerificationService;
 
     @Value("${jwt.expiration}")
     private Long jwtExpiration;
@@ -72,13 +73,19 @@ public class AuthService {
                 .failedLoginAttempts(0)
                 .build();
 
-        userRepository.save(user);
+        user = userRepository.save(user);
         log.info("User registered successfully: {}", user.getEmail());
 
-        // Envoyer email de vérification (async)
-        emailService.sendVerificationEmail(user);
+        // Générer et envoyer le code de vérification par email
+        try {
+            emailVerificationService.createEmailVerificationCode(user);
+            log.info("Verification code sent to: {}", user.getEmail());
+        } catch (Exception e) {
+            log.error("Failed to create verification code for: {}", user.getEmail(), e);
+            // On continue quand même, l'utilisateur pourra demander un renvoi
+        }
 
-        return MessageResponse.of("Registration successful. Please check your email to verify your account.");
+        return MessageResponse.of("Registration successful. Please check your email for the verification code.");
     }
 
     /**
@@ -202,5 +209,57 @@ public class AuthService {
         userRepository.save(user);
         log.warn("Failed login attempt #{} for user: {}", attempts, user.getEmail());
     }
-}
 
+    /**
+     * Vérifie le code email et active le compte
+     */
+    @Transactional
+    public MessageResponse verifyEmail(String email, String code) {
+        log.info("Verifying email code for: {}", email);
+
+        // Trouver l'utilisateur
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        // Vérifier si déjà vérifié
+        if (Boolean.TRUE.equals(user.getIsVerified())) {
+            return MessageResponse.of("Email already verified");
+        }
+
+        // Vérifier le code
+        boolean isValid = emailVerificationService.verifyCode(email, code);
+
+        if (!isValid) {
+            throw new InvalidCredentialsException("Invalid or expired verification code");
+        }
+
+        // Activer le compte
+        user.setIsVerified(true);
+        userRepository.save(user);
+
+        log.info("Email verified successfully for: {}", email);
+        return MessageResponse.of("Email verified successfully. You can now log in.");
+    }
+
+    /**
+     * Renvoie un code de vérification
+     */
+    @Transactional
+    public MessageResponse resendVerificationCode(String email) {
+        log.info("Resending verification code for: {}", email);
+
+        // Trouver l'utilisateur
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        // Vérifier si déjà vérifié
+        if (Boolean.TRUE.equals(user.getIsVerified())) {
+            throw new IllegalStateException("Email already verified");
+        }
+
+        // Créer et envoyer un nouveau code
+        emailVerificationService.createEmailVerificationCode(user);
+
+        return MessageResponse.of("Verification code sent. Please check your email.");
+    }
+}

@@ -40,6 +40,20 @@ logs/
 .env
 .env.local
 .env.production
+.env.development
+
+### Application Config (avec credentials) ###
+src/main/resources/application-local.yml
+src/main/resources/application-dev.yml
+src/main/resources/application-prod.yml
+
+### Scripts avec credentials ###
+set-env.ps1
+set-env.sh
+*.ps1
+!set-env.ps1.example
+*.sh
+!set-env.sh.example
 
 ### macOS ###
 .DS_Store
