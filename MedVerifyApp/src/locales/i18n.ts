@@ -8,6 +8,7 @@ import { getLocales } from 'react-native-localize';
 
 import fr from './fr.json';
 import pt from './pt.json';
+import gu from './gu.json';
 
 const deviceLanguage = getLocales()[0]?.languageCode || 'fr';
 
@@ -16,6 +17,7 @@ i18n.use(initReactI18next).init({
   resources: {
     fr: { translation: fr },
     pt: { translation: pt },
+    gu: { translation: gu },
   },
   lng: deviceLanguage,
   fallbackLng: 'fr',

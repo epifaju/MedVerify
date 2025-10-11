@@ -28,12 +28,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       <View style={styles.content}>
         <Text style={styles.title}>MedVerify</Text>
         <Text style={styles.welcome}>
-          Welcome, {user?.firstName} {user?.lastName}!
+          {t('home.welcome', { firstName: user?.firstName, lastName: user?.lastName })}
         </Text>
-        <Text style={styles.role}>Role: {user?.role}</Text>
+        <Text style={styles.role}>{t('home.role', { role: user?.role })}</Text>
 
         <Button
-          title="Scan Medication"
+          title={t('home.scanMedication')}
           onPress={() => {}}
           style={styles.button}
         />

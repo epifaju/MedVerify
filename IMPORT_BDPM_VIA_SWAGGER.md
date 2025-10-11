@@ -175,3 +175,4 @@ psql -U postgres -d medverify -c "SELECT COUNT(*) FROM medications WHERE cip13 I
 **Utilisez Swagger, c'est la méthode la plus fiable ! 🎯**
 
 
+

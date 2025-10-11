@@ -74,3 +74,4 @@ public class MessageService {
         return LocaleContextHolder.getLocale().getLanguage();
     }
 }
+

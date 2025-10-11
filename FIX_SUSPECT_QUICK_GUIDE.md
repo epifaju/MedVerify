@@ -102,3 +102,4 @@ Voir **`FIX_SUSPECT_AUTHENTIC.md`** pour :
 **Status** : ✅ Code corrigé et compilé  
 **Prochaine étape** : Exécuter le script SQL (après import BDPM)  
 **Impact** : Résout le problème de TOUS les scans marqués SUSPECT
+

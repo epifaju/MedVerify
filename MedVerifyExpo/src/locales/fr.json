@@ -28,6 +28,11 @@
     "passwordsDontMatch": "Les mots de passe ne correspondent pas",
     "requiredField": "Ce champ est requis"
   },
+  "home": {
+    "welcome": "Bienvenue, {{firstName}} {{lastName}} !",
+    "role": "Rôle : {{role}}",
+    "scanMedication": "Scanner un médicament"
+  },
   "scan": {
     "title": "Scanner un médicament",
     "scanning": "Scan en cours...",
@@ -49,7 +54,41 @@
     "manufacturer": "Fabricant",
     "batch": "Lot",
     "expiry": "Expiration",
-    "alerts": "Alertes"
+    "alerts": "Alertes",
+    "verificationSource": "Source de vérification",
+    "dosage": "Dosage",
+    "essentialMedicine": "Médicament Essentiel OMS",
+    "indications": "Indications",
+    "sideEffects": "Effets secondaires",
+    "posology": "Posologie",
+    "adult": "Adulte",
+    "child": "Enfant",
+    "sourceUnknown": "Source inconnue",
+    "sourceFrenchDatabase": "🇫🇷 Base française",
+    "sourceLocalCache": "📦 Cache local",
+    "sourceLocalDatabase": "🏥 Base locale",
+    "sourceLocalDatabaseFallback": "🏥 Base locale (secours)",
+    "sourceUnknownLabel": "❓ Source inconnue",
+    "sourceNone": "❓ Non trouvé"
+  },
+  "dashboard": {
+    "totalScans": "Total Scans",
+    "authenticityRate": "Taux d'Authenticité",
+    "suspiciousMedications": "Médicaments Suspects",
+    "reports": "Signalements",
+    "activeUsers": "Utilisateurs Actifs",
+    "newUsers": "Nouveaux Utilisateurs"
+  },
+  "report": {
+    "newReport": "Nouveau signalement",
+    "description": "Description",
+    "descriptionPlaceholder": "Décrivez le problème en détail (min 10 caractères)...",
+    "purchaseLocation": "Lieu d'achat (optionnel)",
+    "purchaseLocationPlaceholder": "Nom de la pharmacie ou du magasin",
+    "anonymousReport": "Signalement anonyme",
+    "authoritiesNotification": "💡 Les autorités sanitaires seront notifiées automatiquement",
+    "submitReport": "Envoyer le signalement",
+    "charCount": "{{count}} / 2000"
   },
   "common": {
     "loading": "Chargement...",

@@ -38,3 +38,4 @@ public class CreateUserRequest {
     private Boolean isActive = true;
     private Boolean isVerified = false;
 }
+

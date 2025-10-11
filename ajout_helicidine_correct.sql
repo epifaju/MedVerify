@@ -73,3 +73,4 @@ FROM medications m
 WHERE m.gtin = '03400922385624';
 
 
+

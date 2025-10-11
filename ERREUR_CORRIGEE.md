@@ -111,3 +111,4 @@ npm start
 ---
 
 **Redémarrez l'app et profitez de toutes les fonctionnalités !** 🎊
+

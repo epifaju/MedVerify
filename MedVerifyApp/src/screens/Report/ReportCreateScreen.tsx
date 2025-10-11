@@ -122,10 +122,10 @@ const ReportCreateScreen: React.FC<ReportCreateScreenProps> = ({ navigation, rou
         </View>
 
         {/* Description */}
-        <Text style={styles.label}>Description *</Text>
+        <Text style={styles.label}>{t('report.description')} *</Text>
         <TextInput
           style={styles.textArea}
-          placeholder="Décrivez le problème en détail (min 10 caractères)..."
+          placeholder={t('report.descriptionPlaceholder')}
           placeholderTextColor={COLORS.gray[400]}
           value={description}
           onChangeText={setDescription}
@@ -133,12 +133,12 @@ const ReportCreateScreen: React.FC<ReportCreateScreenProps> = ({ navigation, rou
           numberOfLines={6}
           textAlignVertical="top"
         />
-        <Text style={styles.charCount}>{description.length} / 2000</Text>
+        <Text style={styles.charCount}>{t('report.charCount', { count: description.length })}</Text>
 
         {/* Lieu d'achat */}
         <Input
-          label="Lieu d'achat (optionnel)"
-          placeholder="Nom de la pharmacie ou du magasin"
+          label={t('report.purchaseLocation')}
+          placeholder={t('report.purchaseLocationPlaceholder')}
           value={purchaseLocation}
           onChangeText={setPurchaseLocation}
         />
@@ -150,23 +150,23 @@ const ReportCreateScreen: React.FC<ReportCreateScreenProps> = ({ navigation, rou
           <View style={[styles.checkbox, anonymous && styles.checkboxChecked]}>
             {anonymous && <Text style={styles.checkboxCheck}>✓</Text>}
           </View>
-          <Text style={styles.checkboxLabel}>Signalement anonyme</Text>
+          <Text style={styles.checkboxLabel}>{t('report.anonymousReport')}</Text>
         </TouchableOpacity>
 
         <Text style={styles.infoText}>
-          💡 Les autorités sanitaires seront notifiées automatiquement
+          {t('report.authoritiesNotification')}
         </Text>
 
         {/* Boutons */}
         <View style={styles.actions}>
           <Button
-            title="Envoyer le signalement"
+            title={t('report.submitReport')}
             onPress={handleSubmit}
             loading={isSubmitting}
             variant="danger"
           />
           <Button
-            title="Annuler"
+            title={t('common.cancel')}
             onPress={() => navigation.goBack()}
             variant="outline"
             style={styles.cancelButton}

@@ -128,7 +128,7 @@ const ReportListScreen: React.FC<ReportListScreenProps> = ({ navigation }) => {
       <View style={styles.header}>
         <Text style={styles.title}>Mes signalements</Text>
         <Button
-          title="Nouveau signalement"
+          title={t('report.newReport')}
           onPress={() => navigation.navigate('ReportCreate')}
           size="small"
         />

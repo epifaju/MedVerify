@@ -382,3 +382,4 @@ Les 25% restants concernent principalement :
 **Version** : 1.0 (75% Complete)
 **Prochaine étape** : Implémenter cache SQLite offline
 
+

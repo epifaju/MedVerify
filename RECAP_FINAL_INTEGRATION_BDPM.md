@@ -218,3 +218,4 @@ _Guide créé : 10 octobre 2025_
 _Méthode recommandée : Swagger_  
 _Temps estimé : 10-15 minutes_
 
+

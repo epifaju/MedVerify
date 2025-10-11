@@ -1,4 +1,14 @@
+select * from users
+select * from medication_indications;
+select * from medication_contraindications;
+select * from medication_side_effects
+select * from scan_history
+UPDATE medications SET manufacturer_country = NULL 
+WHERE manufacturer_country = 'France'; 
+SELECT COUNT(*) as updated FROM medications 
+WHERE manufacturer_country IS NULL;
 
+select * from medications;
 -- 1. Nombre total de médicaments importés
 SELECT 
     COUNT(*) as "Total médicaments importés",
@@ -25,7 +35,7 @@ SELECT
 FROM medications
 GROUP BY manufacturer
 ORDER BY COUNT(*) DESC
-LIMIT 10;
+LIMIT 20;
 
 -- 4. Import dans les dernières 60 secondes
 SELECT 

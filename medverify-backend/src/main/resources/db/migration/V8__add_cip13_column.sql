@@ -43,3 +43,4 @@ WHERE gtin IS NOT NULL OR cip13 IS NOT NULL OR cis IS NOT NULL;
 COMMENT ON VIEW medication_identifiers IS 'Vue de correspondance entre les différents identifiants (GTIN, CIP13, CIS)';
 
 
+

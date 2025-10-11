@@ -28,3 +28,4 @@ public class UpdateUserRequest {
     private Boolean isActive;
     private Boolean isVerified;
 }
+

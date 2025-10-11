@@ -154,3 +154,4 @@ public class AdminUserController {
             long newUsersLast30Days) {
     }
 }
+

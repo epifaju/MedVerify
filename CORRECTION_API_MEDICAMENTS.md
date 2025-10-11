@@ -154,3 +154,4 @@ INFO : Verification completed with status: UNKNOWN (ou AUTHENTIC si en base loca
 
 **Prochaine étape :** Testez l'API manuellement avec curl pour confirmer le format exact de la requête et réponse.
 
+

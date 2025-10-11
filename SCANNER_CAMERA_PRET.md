@@ -138,3 +138,4 @@ npx expo start
 
 **Documentation complète:** `AJOUT_SCANNER_CAMERA.md`
 
+

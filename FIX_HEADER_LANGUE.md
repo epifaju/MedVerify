@@ -377,3 +377,4 @@ Header épuré, sélecteur compact et élégant
 ---
 
 **Redémarrez l'app et admirez le nouveau header épuré !** 🚀
+

@@ -97,7 +97,7 @@ const AuthorityDashboard: React.FC<AuthorityDashboardProps> = ({ navigation }) =
           <View style={styles.kpiRow}>
             <View style={styles.kpiHalf}>
               <KPICard
-                title="Total Scans"
+                title={t('dashboard.totalScans')}
                 value={stats.kpis.totalScans.toLocaleString()}
                 trend={stats.trends.scansGrowth}
                 icon="📊"
@@ -106,7 +106,7 @@ const AuthorityDashboard: React.FC<AuthorityDashboardProps> = ({ navigation }) =
             </View>
             <View style={styles.kpiHalf}>
               <KPICard
-                title="Taux d'Authenticité"
+                title={t('dashboard.authenticityRate')}
                 value={`${stats.kpis.authenticityRate.toFixed(1)}%`}
                 icon="✅"
                 color={COLORS.success}
@@ -117,7 +117,7 @@ const AuthorityDashboard: React.FC<AuthorityDashboardProps> = ({ navigation }) =
           <View style={styles.kpiRow}>
             <View style={styles.kpiHalf}>
               <KPICard
-                title="Médicaments Suspects"
+                title={t('dashboard.suspiciousMedications')}
                 value={stats.kpis.suspiciousMedications.toLocaleString()}
                 icon="🚫"
                 color={COLORS.danger}
@@ -125,7 +125,7 @@ const AuthorityDashboard: React.FC<AuthorityDashboardProps> = ({ navigation }) =
             </View>
             <View style={styles.kpiHalf}>
               <KPICard
-                title="Signalements"
+                title={t('dashboard.reports')}
                 value={stats.kpis.totalReports.toLocaleString()}
                 trend={stats.trends.reportsGrowth}
                 icon="📝"
@@ -137,7 +137,7 @@ const AuthorityDashboard: React.FC<AuthorityDashboardProps> = ({ navigation }) =
           <View style={styles.kpiRow}>
             <View style={styles.kpiHalf}>
               <KPICard
-                title="Utilisateurs Actifs"
+                title={t('dashboard.activeUsers')}
                 value={stats.kpis.activeUsers.toLocaleString()}
                 icon="👥"
                 color={COLORS.secondary}
@@ -145,7 +145,7 @@ const AuthorityDashboard: React.FC<AuthorityDashboardProps> = ({ navigation }) =
             </View>
             <View style={styles.kpiHalf}>
               <KPICard
-                title="Nouveaux Utilisateurs"
+                title={t('dashboard.newUsers')}
                 value={stats.kpis.newUsers.toLocaleString()}
                 trend={stats.trends.usersGrowth}
                 icon="✨"

@@ -64,5 +64,5 @@ public class MedicationController {
         List<Medication> medications = medicationRepository.findByIsEssentialTrue();
         return ResponseEntity.ok(medications);
     }
-}
 
+}

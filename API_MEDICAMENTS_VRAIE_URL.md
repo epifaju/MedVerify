@@ -276,3 +276,4 @@ public void importBDPM() {
 
 **Voulez-vous que j'implémente maintenant l'import automatique de la base BDPM complète, ou préférez-vous d'abord tester avec Hélicidine en base locale ?**
 
+

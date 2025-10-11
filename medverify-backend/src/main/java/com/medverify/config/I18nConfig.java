@@ -71,3 +71,4 @@ public class I18nConfig implements WebMvcConfigurer {
         registry.addInterceptor(localeChangeInterceptor());
     }
 }
+

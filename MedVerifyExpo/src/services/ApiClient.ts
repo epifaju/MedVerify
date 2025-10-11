@@ -21,6 +21,7 @@ class ApiClient {
       timeout: API_TIMEOUT,
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
     });
 
@@ -37,17 +38,40 @@ class ApiClient {
           config.headers.Authorization = `Bearer ${token}`;
         }
         
+        // Debug: Log request data
+        console.log('API Request:', {
+          url: config.url,
+          method: config.method,
+          data: config.data,
+          headers: config.headers,
+        });
+        
         return config;
       },
       (error: AxiosError) => {
+        console.log('API Request Error:', error);
         return Promise.reject(error);
       }
     );
 
     // Response interceptor - Handle token refresh
     this.axiosInstance.interceptors.response.use(
-      response => response,
+      response => {
+        console.log('API Response:', {
+          url: response.config.url,
+          status: response.status,
+          data: response.data,
+        });
+        return response;
+      },
       async (error: AxiosError) => {
+        console.log('API Response Error:', {
+          url: error.config?.url,
+          status: error.response?.status,
+          message: error.message,
+          data: error.response?.data,
+        });
+        
         const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
         // If 401 and not already retrying, attempt token refresh

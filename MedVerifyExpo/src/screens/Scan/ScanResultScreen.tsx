@@ -69,15 +69,15 @@ const ScanResultScreen: React.FC<ScanResultScreenProps> = ({ navigation, route }
   };
 
   const getSourceLabel = (source?: string): string => {
-    if (!source) return 'Source inconnue';
+    if (!source) return t('result.sourceUnknown');
     
     const labels: Record<string, string> = {
-      'API_MEDICAMENTS_FR': '🇫🇷 Base française',
-      'CACHE_LOCAL': '📦 Cache local',
-      'DB_LOCAL': '🏥 Base locale',
-      'DB_LOCAL_FALLBACK': '🏥 Base locale (secours)',
-      'UNKNOWN': '❓ Source inconnue',
-      'NONE': '❓ Non trouvé'
+      'API_MEDICAMENTS_FR': t('result.sourceFrenchDatabase'),
+      'CACHE_LOCAL': t('result.sourceLocalCache'),
+      'DB_LOCAL': t('result.sourceLocalDatabase'),
+      'DB_LOCAL_FALLBACK': t('result.sourceLocalDatabaseFallback'),
+      'UNKNOWN': t('result.sourceUnknownLabel'),
+      'NONE': t('result.sourceNone')
     };
     return labels[source] || source;
   };
@@ -129,7 +129,7 @@ const ScanResultScreen: React.FC<ScanResultScreenProps> = ({ navigation, route }
         {/* Verification Source Badge */}
         {result.verificationSource && (
           <View style={styles.sourceContainer}>
-            <Text style={styles.sourceLabel}>Source de vérification</Text>
+            <Text style={styles.sourceLabel}>{t('result.verificationSource')}</Text>
             <View style={[styles.sourceBadge, { backgroundColor: getSourceColor(result.verificationSource) + '15' }]}>
               <Text style={[styles.sourceText, { color: getSourceColor(result.verificationSource) }]}>
                 {getSourceLabel(result.verificationSource)}
@@ -152,13 +152,13 @@ const ScanResultScreen: React.FC<ScanResultScreenProps> = ({ navigation, route }
             </View>
 
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Dosage</Text>
+              <Text style={styles.detailLabel}>{t('result.dosage')}</Text>
               <Text style={styles.detailValue}>{result.medication.dosage}</Text>
             </View>
 
             {result.medication.isEssential && (
               <View style={styles.essentialBadge}>
-                <Text style={styles.essentialText}>⭐ Médicament Essentiel OMS</Text>
+                <Text style={styles.essentialText}>⭐ {t('result.essentialMedicine')}</Text>
               </View>
             )}
           </View>
@@ -187,7 +187,7 @@ const ScanResultScreen: React.FC<ScanResultScreenProps> = ({ navigation, route }
           <>
             {result.medication.indications && result.medication.indications.length > 0 && (
               <View style={styles.card}>
-                <Text style={styles.cardTitle}>Indications</Text>
+                <Text style={styles.cardTitle}>{t('result.indications')}</Text>
                 {result.medication.indications.map((indication, index) => (
                   <Text key={index} style={styles.listItem}>
                     • {indication}
@@ -198,7 +198,7 @@ const ScanResultScreen: React.FC<ScanResultScreenProps> = ({ navigation, route }
 
             {result.medication.sideEffects && result.medication.sideEffects.length > 0 && (
               <View style={styles.card}>
-                <Text style={styles.cardTitle}>Effets secondaires</Text>
+                <Text style={styles.cardTitle}>{t('result.sideEffects')}</Text>
                 {result.medication.sideEffects.map((effect, index) => (
                   <Text key={index} style={styles.listItem}>
                     • {effect}
@@ -209,16 +209,16 @@ const ScanResultScreen: React.FC<ScanResultScreenProps> = ({ navigation, route }
 
             {result.medication.posology && (
               <View style={styles.card}>
-                <Text style={styles.cardTitle}>Posologie</Text>
+                <Text style={styles.cardTitle}>{t('result.posology')}</Text>
                 {result.medication.posology.adult && (
                   <View style={styles.posologyRow}>
-                    <Text style={styles.posologyLabel}>Adulte :</Text>
+                    <Text style={styles.posologyLabel}>{t('result.adult')} :</Text>
                     <Text style={styles.posologyValue}>{result.medication.posology.adult}</Text>
                   </View>
                 )}
                 {result.medication.posology.child && (
                   <View style={styles.posologyRow}>
-                    <Text style={styles.posologyLabel}>Enfant :</Text>
+                    <Text style={styles.posologyLabel}>{t('result.child')} :</Text>
                     <Text style={styles.posologyValue}>{result.medication.posology.child}</Text>
                   </View>
                 )}

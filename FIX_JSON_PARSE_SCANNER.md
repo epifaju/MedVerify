@@ -112,3 +112,4 @@ L'application peut maintenant:
 
 **Pour recharger l'app:** Appuyez sur **'r'** dans le terminal Expo
 
+
