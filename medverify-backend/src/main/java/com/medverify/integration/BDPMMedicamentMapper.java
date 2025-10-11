@@ -152,14 +152,31 @@ public class BDPMMedicamentMapper {
 
     /**
      * Détermine si le médicament est actif
+     * 
+     * LOGIQUE CORRIGÉE : Par défaut TRUE sauf si explicitement
+     * suspendu/retiré/abrogé
      */
     private boolean isActive(BDPMMedicamentResponse bdpmResponse) {
-        if (bdpmResponse.getStatusAutorisation() == null) {
+        // Si pas de statut, considérer comme actif
+        if (bdpmResponse.getStatusAutorisation() == null ||
+                bdpmResponse.getStatusAutorisation().trim().isEmpty()) {
             return true;
         }
 
-        String status = bdpmResponse.getStatusAutorisation().toLowerCase();
-        return status.contains("active") || status.contains("autorisée") || status.contains("autorisation active");
+        String status = bdpmResponse.getStatusAutorisation().toLowerCase().trim();
+
+        // Liste des statuts INACTIFS (approche inverse - plus robuste)
+        boolean isInactive = status.contains("suspendu") ||
+                status.contains("retiré") ||
+                status.contains("abrogé") ||
+                status.contains("annulé") ||
+                status.contains("retrait") ||
+                status.contains("suspension") ||
+                status.contains("withdrawn") ||
+                status.contains("revoked");
+
+        // Si pas dans la liste des inactifs, considérer comme actif
+        return !isInactive;
     }
 
     /**

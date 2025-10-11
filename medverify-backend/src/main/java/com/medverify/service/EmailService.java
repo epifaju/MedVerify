@@ -21,16 +21,16 @@ public class EmailService {
 
     @Value("${spring.mail.username}")
     private String fromEmail;
-    
+
     @Value("${spring.mail.password:}")
     private String emailPassword;
-    
+
     /**
      * Vérifie si l'email est correctement configuré
      */
     private boolean isEmailConfigured() {
-        return fromEmail != null && !fromEmail.trim().isEmpty() 
-            && emailPassword != null && !emailPassword.trim().isEmpty();
+        return fromEmail != null && !fromEmail.trim().isEmpty()
+                && emailPassword != null && !emailPassword.trim().isEmpty();
     }
 
     /**
@@ -43,9 +43,9 @@ public class EmailService {
             log.info("Email service not configured. Skipping verification email for: {}", user.getEmail());
             return;
         }
-        
+
         try {
-            
+
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(fromEmail);
             message.setTo(user.getEmail());
@@ -76,9 +76,9 @@ public class EmailService {
             log.info("Email service not configured. Skipping suspicious medication alert for GTIN: {}", gtin);
             return;
         }
-        
+
         try {
-            
+
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(fromEmail);
             message.setTo(fromEmail); // À remplacer par les emails des autorités
@@ -98,5 +98,74 @@ public class EmailService {
             log.debug("Email error details:", e);
         }
     }
-}
 
+    /**
+     * Envoie un email de bienvenue avec les identifiants
+     */
+    @Async
+    public void sendWelcomeEmail(User user, String temporaryPassword) {
+        if (!isEmailConfigured()) {
+            log.info("Email service not configured. Skipping welcome email for: {}", user.getEmail());
+            return;
+        }
+
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(fromEmail);
+            message.setTo(user.getEmail());
+            message.setSubject("MedVerify - Bienvenue !");
+            message.setText(String.format(
+                    "Bonjour %s %s,\n\n" +
+                            "Votre compte MedVerify a été créé avec succès.\n\n" +
+                            "Identifiants de connexion :\n" +
+                            "Email : %s\n" +
+                            "Mot de passe temporaire : %s\n\n" +
+                            "Pour des raisons de sécurité, nous vous recommandons de changer votre mot de passe lors de votre première connexion.\n\n"
+                            +
+                            "Cordialement,\n" +
+                            "L'équipe MedVerify",
+                    user.getFirstName(), user.getLastName(), user.getEmail(), temporaryPassword));
+
+            mailSender.send(message);
+            log.info("Welcome email sent to: {}", user.getEmail());
+        } catch (Exception e) {
+            log.warn("Failed to send welcome email to: {}", user.getEmail());
+            log.debug("Email error details:", e);
+        }
+    }
+
+    /**
+     * Envoie un email de réinitialisation de mot de passe
+     */
+    @Async
+    public void sendPasswordResetEmail(User user, String temporaryPassword) {
+        if (!isEmailConfigured()) {
+            log.info("Email service not configured. Skipping password reset email for: {}", user.getEmail());
+            return;
+        }
+
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(fromEmail);
+            message.setTo(user.getEmail());
+            message.setSubject("MedVerify - Réinitialisation de mot de passe");
+            message.setText(String.format(
+                    "Bonjour %s %s,\n\n" +
+                            "Votre mot de passe a été réinitialisé par un administrateur.\n\n" +
+                            "Nouveau mot de passe temporaire : %s\n\n" +
+                            "Pour des raisons de sécurité, veuillez changer ce mot de passe lors de votre prochaine connexion.\n\n"
+                            +
+                            "Si vous n'avez pas demandé cette réinitialisation, contactez immédiatement un administrateur.\n\n"
+                            +
+                            "Cordialement,\n" +
+                            "L'équipe MedVerify",
+                    user.getFirstName(), user.getLastName(), temporaryPassword));
+
+            mailSender.send(message);
+            log.info("Password reset email sent to: {}", user.getEmail());
+        } catch (Exception e) {
+            log.warn("Failed to send password reset email to: {}", user.getEmail());
+            log.debug("Email error details:", e);
+        }
+    }
+}
