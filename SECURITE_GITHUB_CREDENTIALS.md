@@ -5,8 +5,8 @@
 **Votre `application.yml` contenait** :
 
 ```yaml
-username: epifaju@gmail.com
-password: wqyq ogyu zhgy bgfl # ❌ PUBLIC sur GitHub !
+username: votre-email@gmail.com
+password: xxxx-xxxx-xxxx-xxxx # ❌ PUBLIC sur GitHub !
 ```
 
 **Risques** :
@@ -34,8 +34,8 @@ password: ${SMTP_PASSWORD:}
 
 ```yaml
 # Vos VRAIS credentials (dans .gitignore)
-username: epifaju@gmail.com
-password: wqyq ogyu zhgy bgfl
+username: votre-email@gmail.com
+password: xxxx-xxxx-xxxx-xxxx
 ```
 
 **3. Mis à jour `.gitignore`** ✅
@@ -106,8 +106,8 @@ git push origin main
    password: ${SMTP_PASSWORD:}
 
    # ❌ NE DOIT PAS contenir
-   username: epifaju@gmail.com
-   password: wqyq ogyu zhgy bgfl
+   username: votre-email@gmail.com
+   password: xxxx-xxxx-xxxx-xxxx
    ```
 
 ---

@@ -26,8 +26,8 @@ cd medverify-backend
 **Windows PowerShell** :
 
 ```powershell
-$env:SMTP_USERNAME="epifaju@gmail.com"
-$env:SMTP_PASSWORD="wqyq ogyu zhgy bgfl"
+$env:SMTP_USERNAME="votre-email@gmail.com"
+$env:SMTP_PASSWORD="xxxx-xxxx-xxxx-xxxx"
 $env:JWT_SECRET="your-secret-key-256-bits"
 
 ./mvnw spring-boot:run

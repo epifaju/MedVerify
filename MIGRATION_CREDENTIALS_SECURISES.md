@@ -14,8 +14,8 @@
 **Avant** (❌ DANGEREUX) :
 
 ```yaml
-username: ${SMTP_USERNAME:epifaju@gmail.com}
-password: ${SMTP_PASSWORD:wqyq ogyu zhgy bgfl}
+username: ${SMTP_USERNAME:votre-email@gmail.com}
+password: ${SMTP_PASSWORD:xxxx-xxxx-xxxx-xxxx}
 ```
 
 **Après** (✅ SÉCURISÉ) :
@@ -36,8 +36,8 @@ password: ${SMTP_PASSWORD:}
 ```yaml
 spring:
   mail:
-    username: epifaju@gmail.com
-    password: wqyq ogyu zhgy bgfl
+    username: votre-email@gmail.com
+    password: xxxx-xxxx-xxxx-xxxx
 ```
 
 **✅ Ce fichier NE SERA JAMAIS sur GitHub !**
@@ -93,8 +93,8 @@ cd medverify-backend
 
 ```powershell
 # Session en cours
-$env:SMTP_USERNAME="epifaju@gmail.com"
-$env:SMTP_PASSWORD="wqyq ogyu zhgy bgfl"
+$env:SMTP_USERNAME="votre-email@gmail.com"
+$env:SMTP_PASSWORD="xxxx-xxxx-xxxx-xxxx"
 ./mvnw spring-boot:run
 ```
 
@@ -127,8 +127,8 @@ cp set-env.ps1.example set-env.ps1
 git status
 
 # 2. Chercher credentials (ne doit RIEN trouver)
-git grep -i "epifaju@gmail.com"
-git grep -i "wqyq ogyu zhgy bgfl"
+git grep -i "votre-email@gmail.com"
+git grep -i "xxxx-xxxx-xxxx-xxxx"
 
 # Si vous voyez des credentials → NE PAS PUSH !
 ```
@@ -166,7 +166,7 @@ git push --force origin main
 
 # Supprimer le password de tout l'historique
 java -jar bfg.jar --replace-text passwords.txt
-# passwords.txt contient : wqyq ogyu zhgy bgfl
+# passwords.txt contient : votre-mot-de-passe-reel
 
 git reflog expire --expire=now --all
 git gc --prune=now --aggressive

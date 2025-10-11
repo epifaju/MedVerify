@@ -17,8 +17,8 @@
 
 spring:
   mail:
-    username: epifaju@gmail.com # ❌ Public
-    password: wqyq ogyu zhgy bgfl # ❌ Public
+    username: votre-email@gmail.com # ❌ Public
+    password: xxxx xxxx xxxx xxxx # ❌ Public
 ```
 
 **Conséquences** :
@@ -54,8 +54,8 @@ spring:
 # ⚠️ NE SERA JAMAIS sur GitHub
 spring:
   mail:
-    username: epifaju@gmail.com
-    password: wqyq ogyu zhgy bgfl
+    username: votre-email@gmail.com
+    password: xxxx-xxxx-xxxx-xxxx
 ```
 
 ---
@@ -129,8 +129,8 @@ git status
 
 ```bash
 # 2. Chercher credentials (ne doit RIEN trouver)
-git grep -i "epifaju@gmail.com"
-git grep -i "wqyq ogyu"
+git grep -i "votre-email@gmail.com"
+git grep -i "xxxx xxxx"
 
 # Résultat attendu : Rien ou seulement dans .example
 ```
@@ -140,7 +140,7 @@ git grep -i "wqyq ogyu"
 git diff medverify-backend/src/main/resources/application.yml
 
 # Résultat attendu :
-# - password: ${SMTP_PASSWORD:wqyq ogyu zhgy bgfl}
+# - password: ${SMTP_PASSWORD:xxxx-xxxx-xxxx-xxxx}
 # + password: ${SMTP_PASSWORD:}
 ```
 
@@ -245,8 +245,8 @@ Azure Key Vault
 ├─────────────────────────────────────────┤
 │                                         │
 │  application.yml                        │
-│  ├── username: epifaju@gmail.com        │
-│  └── password: wqyq ogyu... ❌          │
+│  ├── username: votre-email@gmail.com    │
+│  └── password: xxxx xxxx xxxx xxxx ❌   │
 │                                         │
 │  Push GitHub → Credentials publics 🚨   │
 └─────────────────────────────────────────┘
@@ -260,8 +260,8 @@ Azure Key Vault
 │  └── password: ${SMTP_PASSWORD:}   ✅  │
 │                                         │
 │  application-local.yml (gitignore)      │
-│  ├── username: epifaju@gmail.com        │
-│  └── password: wqyq ogyu... 🔒          │
+│  ├── username: votre-email@gmail.com    │
+│  └── password: xxxx xxxx xxxx xxxx 🔒   │
 │                                         │
 │  Push GitHub → Pas de credentials ✅    │
 └─────────────────────────────────────────┘

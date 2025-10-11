@@ -180,7 +180,7 @@ git status
 git diff
 
 # Vérifier pas de credentials
-git grep -i "wqyq ogyu"
+git grep -i "votre-mot-de-passe"
 # Résultat : Rien (ou seulement .example)
 
 # Push en sécurité
@@ -252,7 +252,7 @@ git push origin main
 3. **Vérifier sécurité avant push** :
    ```bash
    git status
-   git grep -i "wqyq ogyu"
+   git grep -i "votre-mot-de-passe"
    ```
 
 ### Sprint 1 (Semaine prochaine)

@@ -17,7 +17,7 @@ cat src/main/resources/application.yml | grep password
 
 # ✅ Résultat attendu :
 # password: ${SMTP_PASSWORD:}
-# (PAS de "wqyq ogyu" visible !)
+# (PAS de mot de passe en clair !)
 ```
 
 **Si vous voyez votre vrai password** : ❌ NE PAS CONTINUER, relire `SECURITE_GITHUB_CREDENTIALS.md`
@@ -127,8 +127,8 @@ git status
 ```
 
 ```bash
-# Chercher credentials (ne doit RIEN trouver)
-git grep -i "wqyq ogyu"
+# Chercher credentials (remplacer par VOTRE password)
+git grep -i "votre-mot-de-passe"
 
 # ✅ Résultat attendu : Rien
 # OU seulement dans .example
@@ -209,7 +209,7 @@ npx expo start
 
 ```bash
 git status
-git grep -i "wqyq ogyu"  # Ne doit RIEN retourner
+git grep -i "votre-mot-de-passe"  # Ne doit RIEN retourner
 ```
 
 ---

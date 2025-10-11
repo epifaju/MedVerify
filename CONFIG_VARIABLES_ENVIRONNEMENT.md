@@ -6,8 +6,8 @@
 
 ```yaml
 # ❌ DANGEREUX - À NE JAMAIS FAIRE
-username: epifaju@gmail.com
-password: wqyq ogyu zhgy bgfl # Visible sur GitHub !
+username: votre-email@gmail.com
+password: xxxx xxxx xxxx xxxx # Visible sur GitHub !
 ```
 
 **Risques** :
@@ -36,8 +36,8 @@ password: wqyq ogyu zhgy bgfl # Visible sur GitHub !
 ```yaml
 # ❌ AVANT (DANGEREUX)
 mail:
-  username: ${SMTP_USERNAME:epifaju@gmail.com}
-  password: ${SMTP_PASSWORD:wqyq ogyu zhgy bgfl}
+  username: ${SMTP_USERNAME:votre-email@gmail.com}
+  password: ${SMTP_PASSWORD:xxxx-xxxx-xxxx-xxxx}
 ```
 
 **Par** :
@@ -65,8 +65,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: epifaju@gmail.com
-    password: wqyq ogyu zhgy bgfl
+    username: votre-email@gmail.com
+    password: xxxx-xxxx-xxxx-xxxx
     properties:
       mail.smtp:
         auth: true
@@ -121,8 +121,8 @@ $env:SPRING_PROFILES_ACTIVE="local"
 # ⚠️ Ce fichier est dans .gitignore
 $env:SMTP_HOST="smtp.gmail.com"
 $env:SMTP_PORT="587"
-$env:SMTP_USERNAME="epifaju@gmail.com"
-$env:SMTP_PASSWORD="wqyq ogyu zhgy bgfl"
+$env:SMTP_USERNAME="votre-email@gmail.com"
+$env:SMTP_PASSWORD="xxxx-xxxx-xxxx-xxxx"
 $env:JWT_SECRET="votre-secret-jwt-256-bits"
 
 # Lancer l'application
@@ -147,8 +147,8 @@ cd medverify-backend
 # ⚠️ Ce fichier est dans .gitignore
 export SMTP_HOST=smtp.gmail.com
 export SMTP_PORT=587
-export SMTP_USERNAME=epifaju@gmail.com
-export SMTP_PASSWORD="wqyq ogyu zhgy bgfl"
+export SMTP_USERNAME=votre-email@gmail.com
+export SMTP_PASSWORD="xxxx-xxxx-xxxx-xxxx"
 export JWT_SECRET=votre-secret-jwt-256-bits
 
 # Lancer l'application
@@ -185,8 +185,8 @@ chmod +x set-env.sh
 # ⚠️ Ce fichier est dans .gitignore
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USERNAME=epifaju@gmail.com
-SMTP_PASSWORD=wqyq ogyu zhgy bgfl
+SMTP_USERNAME=votre-email@gmail.com
+SMTP_PASSWORD=xxxx-xxxx-xxxx-xxxx
 JWT_SECRET=votre-secret-jwt-256-bits
 DB_PASSWORD=postgres
 ```
@@ -371,10 +371,10 @@ spring:
 
 ```bash
 # Windows PowerShell (persistant)
-[System.Environment]::SetEnvironmentVariable('SMTP_PASSWORD', 'wqyq ogyu zhgy bgfl', 'User')
+[System.Environment]::SetEnvironmentVariable('SMTP_PASSWORD', 'xxxx-xxxx-xxxx-xxxx', 'User')
 
 # Linux/Mac (session)
-export SMTP_PASSWORD=wqyq ogyu zhgy bgfl
+export SMTP_PASSWORD=xxxx-xxxx-xxxx-xxxx
 ```
 
 ---
@@ -453,7 +453,7 @@ git secrets --register-aws
 # Ajouter patterns custom
 git secrets --add 'password.*=.*'
 git secrets --add 'smtp.*password'
-git secrets --add 'wqyq ogyu zhgy bgfl'
+git secrets --add 'votre-mot-de-passe-reel'
 ```
 
 ---
@@ -502,8 +502,8 @@ cd medverify-backend
 
 ```bash
 # Windows
-$env:SMTP_USERNAME="epifaju@gmail.com"
-$env:SMTP_PASSWORD="wqyq ogyu zhgy bgfl"
+$env:SMTP_USERNAME="votre-email@gmail.com"
+$env:SMTP_PASSWORD="xxxx-xxxx-xxxx-xxxx"
 ./mvnw spring-boot:run
 ```
 
@@ -691,8 +691,8 @@ spring:
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
 
 # Méthode 2 : Variables env
-$env:SMTP_USERNAME="epifaju@gmail.com"
-$env:SMTP_PASSWORD="wqyq ogyu zhgy bgfl"
+$env:SMTP_USERNAME="votre-email@gmail.com"
+$env:SMTP_PASSWORD="xxxx-xxxx-xxxx-xxxx"
 ./mvnw spring-boot:run
 ```
 
@@ -702,7 +702,7 @@ $env:SMTP_PASSWORD="wqyq ogyu zhgy bgfl"
 # Avant chaque push
 git status
 git diff
-git grep -i "wqyq ogyu zhgy bgfl"  # Ne doit RIEN retourner !
+git grep -i "xxxx xxxx"  # Ne doit RIEN retourner !
 ```
 
 ---
@@ -721,13 +721,13 @@ git grep -i "wqyq ogyu zhgy bgfl"  # Ne doit RIEN retourner !
 java -jar bfg.jar --replace-text passwords.txt
 
 # passwords.txt contient :
-# wqyq ogyu zhgy bgfl
+# votre-mot-de-passe-reel
 ```
 
 **Option 2 : git filter-branch**
 
 ```bash
-git filter-branch --tree-filter 'find . -name "application.yml" -exec sed -i "s/wqyq ogyu zhgy bgfl/REDACTED/g" {} \;' HEAD
+git filter-branch --tree-filter 'find . -name "application.yml" -exec sed -i "s/VOTRE_PASSWORD/REDACTED/g" {} \;' HEAD
 ```
 
 **Puis** :
