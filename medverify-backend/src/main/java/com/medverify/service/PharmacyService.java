@@ -36,14 +36,23 @@ public class PharmacyService {
      */
     public List<PharmacyDTO> findPharmaciesNearby(double latitude, double longitude,
             double radiusKm, int limit) {
+        log.info("🔍 Recherche pharmacies - User position: lat={}, lng={}, radius={}km",
+                latitude, longitude, radiusKm);
         double radiusMeters = radiusKm * 1000;
 
         List<Object[]> results = pharmacyRepository.findPharmaciesWithinRadius(
                 latitude, longitude, radiusMeters, limit);
 
-        return results.stream()
+        List<PharmacyDTO> pharmacies = results.stream()
                 .map(this::mapToPharmacyDTO)
                 .collect(Collectors.toList());
+
+        log.info("✅ Pharmacies trouvées: {}", pharmacies.size());
+        pharmacies.forEach(p -> log.info("   🏥 {} - lat={}, lng={}, distance={}km",
+                p.getName(), p.getLatitude(), p.getLongitude(),
+                p.getDistanceKm() != null ? String.format("%.2f", p.getDistanceKm()) : "N/A"));
+
+        return pharmacies;
     }
 
     /**
@@ -130,8 +139,17 @@ public class PharmacyService {
      * Mapper Object[] résultat requête native -> DTO
      */
     private PharmacyDTO mapToPharmacyDTO(Object[] row) {
-        Pharmacy pharmacy = (Pharmacy) row[0];
-        Double distanceMeters = ((Number) row[1]).doubleValue();
+        // La requête native retourne les colonnes individuelles, pas l'objet Pharmacy
+        // Structure: [id, name, address, city, region, district, phone, email,
+        // postal_code, country, is_24h, is_night_pharmacy, is_active,
+        // opening_hours, services, photo_url, rating, total_reviews,
+        // location, distance]
+
+        UUID pharmacyId = (UUID) row[0];
+        Pharmacy pharmacy = pharmacyRepository.findById(pharmacyId)
+                .orElseThrow(() -> new RuntimeException("Pharmacy not found: " + pharmacyId));
+
+        Double distanceMeters = ((Number) row[row.length - 1]).doubleValue();
 
         PharmacyDTO dto = convertToDTO(pharmacy);
         dto.setDistanceKm(distanceMeters / 1000.0);
