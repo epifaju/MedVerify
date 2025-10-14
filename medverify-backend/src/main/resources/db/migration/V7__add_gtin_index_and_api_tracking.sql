@@ -61,3 +61,5 @@ COMMENT ON VIEW medication_sources_stats IS 'Statistiques sur les sources de don
 
 
 
+
+

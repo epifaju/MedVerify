@@ -31,3 +31,5 @@ SELECT
 FROM medications
 GROUP BY is_active;
 
+
+

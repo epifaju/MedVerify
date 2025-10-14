@@ -52,3 +52,5 @@ app:
     code-expiry-minutes: 15
     max-pending-codes: 5
 
+
+

@@ -343,3 +343,5 @@ SELECT * FROM flyway_schema_history;
 **La vérification email avec code à 6 chiffres est maintenant opérationnelle ! 🎉📧✅**
 
 **Conformité PRD** : P0 Critical résolu ! 🎯
+
+

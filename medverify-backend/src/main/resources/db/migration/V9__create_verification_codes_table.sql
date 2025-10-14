@@ -35,3 +35,5 @@ COMMENT ON COLUMN verification_codes.verified_at IS 'Date de vérification (NULL
 COMMENT ON COLUMN verification_codes.attempts IS 'Nombre de tentatives de vérification';
 COMMENT ON COLUMN verification_codes.max_attempts IS 'Nombre maximum de tentatives (3 par défaut)';
 
+
+

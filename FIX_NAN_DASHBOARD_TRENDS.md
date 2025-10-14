@@ -254,3 +254,5 @@ Les tendances affichent maintenant des valeurs correctes :
    - Nouveaux Utilisateurs : **12.0%** au lieu de NaN%
 
 **Les tendances s'affichent maintenant correctement !** 🎉📈
+
+

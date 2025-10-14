@@ -589,3 +589,5 @@ Mais ces fonctionnalités ne sont **pas critiques** pour atteindre 100% selon le
 🎉 **Félicitations ! Le scanner est prêt pour la production !** 🎉
 
 
+
+

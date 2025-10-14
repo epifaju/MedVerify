@@ -299,3 +299,5 @@ public ResponseEntity<DashboardStatsResponse> getDashboardStats(
 ---
 
 **Les autorités sanitaires ont maintenant tous les outils pour protéger la santé publique de Guinée-Bissau !** 🇬🇼🏥✅
+
+

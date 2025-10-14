@@ -267,3 +267,5 @@ Le système i18n personnalisé de MedVerifyExpo :
 - Utilise un système de listeners pour la réactivité
 
 Tout fonctionne parfaitement ! 🚀
+
+

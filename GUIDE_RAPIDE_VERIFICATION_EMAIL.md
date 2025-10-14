@@ -132,3 +132,5 @@ En production, **obligatoirement** configurer un vrai service SMTP (Gmail, SendG
 ---
 
 **La vérification email est opérationnelle ! 📧✅**
+
+

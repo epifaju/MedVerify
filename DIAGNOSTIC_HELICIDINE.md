@@ -152,3 +152,5 @@ Scannez un de ces médicaments, vous devriez avoir `AUTHENTIC` ✅
 **Dites-moi ce que vous voyez quand vous cherchez "HELICIDINE" dans Swagger !** 🔍
 
 Est-ce que le médicament existe dans votre base avec un GTIN différent ?
+
+

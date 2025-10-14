@@ -228,3 +228,5 @@ cd medverify-backend
 **Vos credentials sont sécurisés dans `application-local.yml` ! 🔒✅**
 
 **Le backend va démarrer avec le profil local ! 🚀**
+
+

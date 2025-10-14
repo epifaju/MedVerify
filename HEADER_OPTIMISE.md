@@ -178,3 +178,5 @@ Gain : -74% d'espace
 **Date** : 10 Octobre 2025  
 **Impact** : **MAJEUR** (UX +70%, espace -74%)
 
+
+

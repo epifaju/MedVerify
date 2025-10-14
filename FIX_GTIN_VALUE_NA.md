@@ -335,3 +335,5 @@ Pour tester, il faut :
 3. Au moins 4 fois (threshold = 3)
 
 **Le GTIN s'affichera correctement dès qu'il y aura des données !** 🎉
+
+

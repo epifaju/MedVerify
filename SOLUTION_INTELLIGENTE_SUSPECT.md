@@ -184,3 +184,5 @@ L'algorithme de sécurité fonctionne correctement. Au lieu de désactiver les a
 ---
 
 **Rechargez l'application et testez ! Le message sera beaucoup plus clair maintenant !** 🚀
+
+

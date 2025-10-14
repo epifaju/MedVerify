@@ -325,3 +325,5 @@ Maintenant que P0 est résolu :
 🇬🇼 **MedVerify - Pour une Guinée-Bissau sans médicaments contrefaits** 💊✅
 
 **Merci d'avoir utilisé MedVerify !** 🙏
+
+

@@ -51,3 +51,5 @@ GROUP BY is_active;
 -- - Pourquoi il est marqué SUSPECT (is_active = false ?)
 -- - Le pourcentage de médicaments actifs vs inactifs dans votre base
 
+
+

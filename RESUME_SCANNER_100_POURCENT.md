@@ -204,3 +204,5 @@ Toutes les fonctionnalités critiques du PRD sont implémentées avec des perfor
 🎊 **Le scanner est prêt pour la production !** 🎊
 
 
+
+

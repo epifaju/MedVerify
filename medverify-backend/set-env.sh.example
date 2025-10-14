@@ -31,3 +31,5 @@ echo "🚀 Lancement de l'application..."
 # Lancer l'application
 ./mvnw spring-boot:run
 
+
+

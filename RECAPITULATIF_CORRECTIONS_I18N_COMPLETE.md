@@ -409,3 +409,5 @@ Le changement de langue fonctionne **instantanément** sur **tous les écrans**,
 - 🇬🇼 Créole bissau-guinéen (Kriol)
 
 **Mission accomplie !** 🎉🚀
+
+

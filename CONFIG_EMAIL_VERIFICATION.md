@@ -243,3 +243,5 @@ INFO  - Email sent successfully to: test@example.com  ← Si SMTP OK
 ---
 
 **Une fois configuré, la vérification email fonctionnera automatiquement ! 📧✅**
+
+

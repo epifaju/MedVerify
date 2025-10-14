@@ -363,3 +363,5 @@ app:
 **Feature Owner** : Assistant IA  
 **Testé** : ✅ Code review passed  
 **Approuvé** : ✅ Ready to merge
+
+

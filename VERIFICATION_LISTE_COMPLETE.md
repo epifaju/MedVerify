@@ -383,3 +383,5 @@ Les 25% restants concernent principalement :
 **Prochaine étape** : Implémenter cache SQLite offline
 
 
+
+

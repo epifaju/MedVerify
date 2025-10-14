@@ -191,3 +191,5 @@ Cela vous dira **exactement pourquoi** le médicament est suspect !
 **La modification que je viens de faire va vous montrer POURQUOI chaque médicament est SUSPECT.**
 
 **Rechargez et testez maintenant ! Dites-moi ce que vous voyez !** 🚀
+
+

@@ -51,3 +51,5 @@ WHERE gtin = '03400922385624';
 -- Note : is_active = false car médicament VRAIMENT retiré du marché en 2022
 -- Le statut SUSPECT sera donc correct et justifié
 
+
+

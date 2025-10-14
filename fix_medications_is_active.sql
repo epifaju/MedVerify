@@ -25,3 +25,5 @@ WHERE gtin = '03400922385624' OR cip13 = '3400922385624';
 -- SET is_active = true, updated_at = NOW() 
 -- WHERE gtin = '03400922385624' OR cip13 = '3400922385624';
 
+
+

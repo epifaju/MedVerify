@@ -25,3 +25,5 @@ public class VerifyEmailRequest {
     @Pattern(regexp = "^[0-9]{6}$", message = "Code must be exactly 6 digits")
     private String code;
 }
+
+

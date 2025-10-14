@@ -286,3 +286,5 @@ Seuls les médicaments avec statut explicite "suspendu", "retiré", "abrogé", e
 **Date** : 10 Octobre 2025  
 **Impact** : CRITIQUE (résout le problème de tous les scans marqués SUSPECT)
 
+
+

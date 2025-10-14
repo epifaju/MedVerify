@@ -83,3 +83,5 @@ psql -U postgres -d medverify -c "SELECT gtin, name FROM medications WHERE cip13
 **⏱️ Durée totale : 15-20 minutes**
 
 
+
+

@@ -273,3 +273,5 @@ Les logs devraient maintenant afficher :
 - Le message d'erreur
 - Les détails de l'erreur
 - La réponse du serveur (si disponible)
+
+

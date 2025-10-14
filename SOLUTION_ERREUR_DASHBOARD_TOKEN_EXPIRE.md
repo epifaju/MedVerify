@@ -149,3 +149,5 @@ Donc quand vous aurez résolu le problème de token, le Dashboard sera **multili
 **Déconnectez-vous et reconnectez-vous maintenant**, puis essayez d'accéder au Dashboard.
 
 Le problème devrait être résolu ! ✅
+
+

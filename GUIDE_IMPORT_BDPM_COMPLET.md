@@ -375,3 +375,5 @@ Get-Content logs\medverify.log -Wait -Tail 30
 _Durée totale estimée : 15-20 minutes (compilation + import)_
 
 
+
+

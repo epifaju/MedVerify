@@ -71,3 +71,5 @@ public interface VerificationCodeRepository extends JpaRepository<VerificationCo
             @Param("userId") UUID userId,
             @Param("now") Instant now);
 }
+
+

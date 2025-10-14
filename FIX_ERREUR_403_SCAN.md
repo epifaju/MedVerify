@@ -175,3 +175,5 @@ Le message vous indiquera maintenant clairement si c'est un problème de session
 **Prochaine amélioration:** Implémenter le refresh automatique du token (401 → refresh → retry)
 
 
+
+

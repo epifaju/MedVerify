@@ -22,3 +22,5 @@ SET password = '$2a$10$N9qo8uLOickgx2ZMRZoMqeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
 -- Afficher le résultat
 SELECT email, first_name, last_name, role FROM users WHERE email = 'test@medverify.com';
 
+
+
