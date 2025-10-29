@@ -299,3 +299,4 @@ Si d'autres endpoints retournent également `Access Denied` pour les AUTHORITY, 
 **Principe** : Les `AUTHORITY` (autorités sanitaires) devraient avoir des permissions similaires aux `ADMIN` pour les fonctions de surveillance et de gestion.
 
 
+

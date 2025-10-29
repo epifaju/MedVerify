@@ -186,3 +186,5 @@ psql -U postgres -d medverify -c "SELECT COUNT(*) as total FROM medications WHER
 
 
 
+
+

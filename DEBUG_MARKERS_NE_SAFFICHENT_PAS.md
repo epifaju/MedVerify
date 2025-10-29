@@ -343,3 +343,4 @@ if (pharmacies.length > 0) {
 4. **Une capture d'écran** de la carte
 
 **Cela me permettra de localiser exactement où le problème se situe !** 🔍
+

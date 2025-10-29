@@ -14,3 +14,4 @@ DELETE FROM flyway_schema_history WHERE version = '10';
 -- Vérification
 SELECT * FROM flyway_schema_history ORDER BY installed_rank DESC LIMIT 5;
 
+

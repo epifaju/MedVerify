@@ -200,3 +200,4 @@ C'est **normal** si :
 ## ✅ C'est corrigé !
 
 Les requêtes PostGIS devraient maintenant fonctionner sans erreur de syntaxe.
+

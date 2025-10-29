@@ -85,3 +85,5 @@ psql -U postgres -d medverify -c "SELECT gtin, name FROM medications WHERE cip13
 
 
 
+
+

@@ -88,3 +88,4 @@ ORDER BY distance_km;
 ---
 
 **📚 Guide complet :** Voir `GUIDE_COMPLET_PHARMACIES.md`
+

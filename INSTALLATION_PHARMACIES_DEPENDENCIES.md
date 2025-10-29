@@ -100,3 +100,4 @@ Pour un projet Expo géré (Expo Go), vous n'avez pas besoin de configurer les f
 Les configurations se font directement dans `app.json`.
 
 Si vous utilisez un build natif (EAS Build ou eject), vous devrez configurer les fichiers natifs manuellement.
+

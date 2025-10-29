@@ -319,3 +319,4 @@ J'ai créé **`FIX_BATCH_LOGS_INITIALISATION.md`** avec tous les détails.
 **Redémarrez le backend et vous verrez clairement si le batch est activé ! 🎉⏰📦**
 
 
+

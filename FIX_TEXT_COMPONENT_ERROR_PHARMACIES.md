@@ -1,8 +1,8 @@
-# 🔧 Fix: Erreur "Text strings must be rendered within a <Text> component" - PharmaciesScreen
+# ✅ Fix : Erreur "Text strings must be rendered within a <Text> component"
 
-## 📋 Problème
+## 🐛 Problème
 
-Erreur React Native lors de l'affichage des pharmacies :
+L'écran des pharmacies affiche l'erreur :
 
 ```
 ERROR  Text strings must be rendered within a <Text> component.
@@ -10,118 +10,93 @@ ERROR  Text strings must be rendered within a <Text> component.
 
 ## 🔍 Cause
 
-Les données retournées par l'API peuvent contenir des propriétés `undefined` ou `null` :
+Dans React Native, tout texte affiché à l'écran doit être encapsulé dans un composant `<Text>`. L'erreur se produit quand :
 
-- `address` : peut être null ou undefined
-- `city` : peut être null ou undefined
-- Les propriétés booléennes (`is24h`, `isNightPharmacy`, etc.) peuvent être null (Boolean wrapper Java)
+- Une valeur (string, number) est rendue directement dans un `<View>`
+- Une valeur conditionnelle est rendue sans vérification appropriée
+- Une valeur `null` ou `undefined` est parfois convertie en string `"null"` ou `"undefined"`
 
-En React Native, essayer de rendre directement `undefined` ou `null` dans un composant `<Text>` cause cette erreur.
+## ✅ Corrections Appliquées
 
-## ✅ Solutions Appliquées
+### Fichier modifié : `MedVerifyApp/MedVerifyExpo/src/screens/Pharmacies/PharmaciesScreen.tsx`
 
-### 1. Ajout de vérifications conditionnelles dans `PharmaciesScreen.tsx`
+**Problèmes corrigés** :
 
-**Avant :**
+1. **Vérification renforcée pour les adresses** :
 
-```typescript
-<Text style={styles.pharmacyName}>{item.name}</Text>
-<Text style={styles.pharmacyAddress}>{item.address}</Text>
-<Text style={styles.pharmacyCity}>{item.city}</Text>
-```
+   ```typescript
+   // Avant
+   {
+     hasAddress && <Text style={styles.pharmacyAddress}>{item.address}</Text>;
+   }
 
-**Après :**
+   // Après
+   {
+     hasAddress && item.address && (
+       <Text style={styles.pharmacyAddress}>{String(item.address)}</Text>
+     );
+   }
+   ```
 
-```typescript
-<Text style={styles.pharmacyName}>{item.name}</Text>;
-{
-  item.address && <Text style={styles.pharmacyAddress}>{item.address}</Text>;
-}
-{
-  item.city && <Text style={styles.pharmacyCity}>{item.city}</Text>;
-}
-```
+2. **Vérification renforcée pour les villes** :
 
-### 2. Correction du popup HTML dans `LeafletMapView.tsx`
+   ```typescript
+   // Avant
+   {
+     hasCity && <Text style={styles.pharmacyCity}>{item.city}</Text>;
+   }
 
-**Avant :**
+   // Après
+   {
+     hasCity && item.city && (
+       <Text style={styles.pharmacyCity}>{String(item.city)}</Text>
+     );
+   }
+   ```
 
-```typescript
-const popupContent = `
-  <div class="pharmacy-popup">
-    <h3>\${pharmacy.name}</h3>
-    <p>\${pharmacy.address}</p>
-    \${pharmacy.distanceKm ? \`<p class="distance">\${pharmacy.distanceKm.toFixed(1)} km</p>\` : ''}
-  </div>
-`;
-```
+3. **Vérification renforcée pour la distance** :
 
-**Après :**
+   ```typescript
+   // Avant
+   {
+     hasDistance && <Text>{item.distanceKm!.toFixed(1)} km</Text>;
+   }
 
-```typescript
-const popupContent = `
-  <div class="pharmacy-popup">
-    <h3>\${pharmacy.name}</h3>
-    \${pharmacy.address ? \`<p>\${pharmacy.address}</p>\` : ''}
-    \${pharmacy.distanceKm ? \`<p class="distance">\${pharmacy.distanceKm.toFixed(1)} km</p>\` : ''}
-  </div>
-`;
-```
+   // Après
+   {
+     hasDistance && item.distanceKm != null && (
+       <Text>{Number(item.distanceKm).toFixed(1)} km</Text>
+     );
+   }
+   ```
 
-## 📊 Analyse Backend
+**Explications** :
 
-Le backend retourne bien les bonnes propriétés :
+- `String()` : Garantit que la valeur est convertie en string avant d'être rendue
+- Vérification double : `hasAddress && item.address` évite de rendre `null` ou `undefined`
+- `Number()` : Garantit que la distance est un nombre avant d'appeler `.toFixed()`
+- Vérification `!= null` : Plus sûre que `!` pour éviter les erreurs
 
-- ✅ `latitude` et `longitude` (pas `lat`/`lng`)
-- ⚠️ Les champs `address`, `city` peuvent être null
-- ⚠️ Les booléens sont des `Boolean` wrapper (peuvent être null)
+---
 
-```java
-// PharmacyDTO.java (lignes 38-40)
-private Boolean is24h;
-private Boolean isNightPharmacy;
-private Boolean isOpenNow;
-```
+## 🚀 Test
 
-## 🎯 Résultat
+Relancez l'application et allez dans l'onglet Pharmacies. L'erreur ne devrait plus apparaître.
 
-Les pharmacies s'affichent maintenant correctement sans erreur, même si certaines propriétés sont manquantes.
+---
 
-Les composants conditionnels ne sont rendus que si les données existent :
+## 📝 Notes
 
-- L'adresse s'affiche uniquement si présente
-- La ville s'affiche uniquement si présente
-- Le popup de la carte n'affiche que les informations disponibles
+- **Règle React Native** : Tout texte visible doit être dans un composant `<Text>`
+- **Valeurs conditionnelles** : Toujours vérifier que la valeur existe avant de la rendre
+- **Conversion de types** : Utiliser `String()` ou `Number()` pour s'assurer du type correct
 
-## 📝 Bonnes Pratiques
+---
 
-Pour éviter ce type d'erreur à l'avenir :
+## ✅ Résultat Attendu
 
-1. **Toujours vérifier les valeurs nulles/undefined avant de rendre dans JSX**
+Après ces corrections :
 
-```typescript
-{
-  value && <Text>{value}</Text>;
-}
-```
-
-2. **Utiliser des valeurs par défaut si nécessaire**
-
-```typescript
-<Text>{value || "Non renseigné"}</Text>
-```
-
-3. **Typer correctement avec des propriétés optionnelles**
-
-```typescript
-interface Pharmacy {
-  name: string; // Obligatoire
-  address?: string; // Optionnel
-  city?: string; // Optionnel
-}
-```
-
-## ✅ Fichiers Modifiés
-
-- `MedVerifyApp/MedVerifyExpo/src/screens/Pharmacies/PharmaciesScreen.tsx`
-- `MedVerifyApp/MedVerifyExpo/src/components/LeafletMapView.tsx`
+- ✅ L'erreur "Text strings must be rendered within a <Text> component" ne devrait plus apparaître
+- ✅ Les pharmacies s'affichent correctement dans la liste
+- ✅ Les informations (adresse, ville, distance) s'affichent correctement

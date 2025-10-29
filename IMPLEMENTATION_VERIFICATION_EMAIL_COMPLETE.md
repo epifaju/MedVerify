@@ -327,3 +327,4 @@ Maintenant que P0 est résolu :
 **Merci d'avoir utilisé MedVerify !** 🙏
 
 
+

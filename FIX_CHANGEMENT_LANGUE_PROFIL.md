@@ -250,3 +250,4 @@ Les corrections ont été faites dans le système personnalisé de **MedVerifyEx
 🟢 **PROBLÈME RÉSOLU** - Le changement de langue fonctionne maintenant parfaitement dans le module Profil !
 
 
+

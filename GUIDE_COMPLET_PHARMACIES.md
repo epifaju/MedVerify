@@ -641,3 +641,4 @@ Vous avez maintenant une fonctionnalité complète de localisation de pharmacies
 - ✅ Affichage horaires
 
 **La fonctionnalité est prête à être testée et déployée ! 🚀**
+

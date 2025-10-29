@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/pharmacies")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "*")
+// CORS géré globalement par SecurityConfig
 public class PharmacyController {
 
     private final PharmacyService pharmacyService;
@@ -36,7 +37,7 @@ public class PharmacyController {
                 request.getLatitude(), request.getLongitude(), request.getRadiusKm(),
                 request.getOpenNow(), request.getOnDutyOnly());
 
-        List<PharmacyDTO> pharmacies;
+        List<PharmacyDTO> pharmacies = new ArrayList<>(); // Initialisation pour éviter NullPointerException
 
         // Recherche par géolocalisation
         if (request.getLatitude() != null && request.getLongitude() != null) {

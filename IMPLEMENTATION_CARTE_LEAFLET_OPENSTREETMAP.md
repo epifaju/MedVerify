@@ -557,3 +557,4 @@ const tileUrl = isDarkMode
 **🆓 Sans frais • Sans clé API • 100% Open Source**
 
 **⏱️ Temps d'implémentation : 20 minutes → Carte gratuite à vie ! 🚀**
+

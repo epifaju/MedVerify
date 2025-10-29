@@ -345,3 +345,4 @@ SELECT * FROM flyway_schema_history;
 **Conformité PRD** : P0 Critical résolu ! 🎯
 
 
+

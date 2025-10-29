@@ -123,3 +123,4 @@ Quand `gap` n'est pas reconnu, React Native essaie de le rendre comme du texte, 
 **3. Confirmez que l'erreur a disparu**
 
 Si l'erreur persiste après rechargement, partagez les **nouveaux logs** pour diagnostic supplémentaire. 🔍
+

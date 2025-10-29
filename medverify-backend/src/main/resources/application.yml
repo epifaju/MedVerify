@@ -3,10 +3,11 @@ spring:
     name: medverify-backend
 
   # PostgreSQL Configuration
+  # ⚠️ SECURITÉ : Le mot de passe doit être dans application-local.yml ou variable d'environnement
   datasource:
     url: jdbc:postgresql://localhost:5432/medverify
-    username: postgres
-    password: Malagueta7
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:}
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 10
@@ -70,8 +71,10 @@ spring:
     time-zone: UTC
 
 # Security & JWT Configuration
+# ⚠️ SECURITÉ : Le secret JWT doit être dans application-local.yml ou variable d'environnement
+# Générer un secret fort : openssl rand -base64 32
 jwt:
-  secret: ${JWT_SECRET:MedVerify2025SecretKeyForJWTTokenGenerationChangeInProduction123456789}
+  secret: ${JWT_SECRET:}
   expiration: 900000 # 15 minutes in milliseconds
   refresh-expiration: 604800000 # 7 days in milliseconds
 
@@ -130,6 +133,7 @@ logging:
     org.springframework.web: INFO
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    # Note: En production, ces niveaux DEBUG doivent être INFO ou WARN
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
@@ -236,6 +240,9 @@ spring:
     show-sql: false
 logging:
   level:
-    root: WARN
+    root: INFO
     com.medverify: INFO
     org.springframework.security: WARN
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+    org.springframework.web: INFO

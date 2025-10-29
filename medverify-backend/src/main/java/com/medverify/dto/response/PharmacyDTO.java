@@ -55,3 +55,4 @@ public class PharmacyDTO {
     private Double rating;
     private Integer totalReviews;
 }
+

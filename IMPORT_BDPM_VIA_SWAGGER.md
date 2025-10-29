@@ -178,3 +178,5 @@ psql -U postgres -d medverify -c "SELECT COUNT(*) FROM medications WHERE cip13 I
 
 
 
+
+

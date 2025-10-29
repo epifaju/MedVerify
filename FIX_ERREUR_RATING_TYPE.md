@@ -120,3 +120,4 @@ Mais ici, `DOUBLE PRECISION` est plus simple et adapté pour une notation 0-5.
 ## ✅ C'est corrigé !
 
 La migration est maintenant correcte. Le backend devrait démarrer sans erreur après avoir nettoyé l'ancienne table.
+

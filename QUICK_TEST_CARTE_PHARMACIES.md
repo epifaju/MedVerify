@@ -271,3 +271,4 @@ npx expo start --clear
 **🚀 Profitez de votre carte interactive !**
 
 **Temps total : ~5 minutes** (config clé API + test)
+

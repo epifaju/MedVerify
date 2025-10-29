@@ -181,3 +181,4 @@ private PharmacyDTO mapToPharmacyDTO(Object[] row) {
 **🎉 Le backend devrait redémarrer et tout devrait fonctionner !**
 
 **Partagez-moi les nouveaux logs une fois le backend relancé ! 🚀**
+

@@ -46,3 +46,4 @@ public class PharmacySearchRequest {
     // Services requis
     private List<String> requiredServices; // "DELIVERY", "COVID_TEST", etc.
 }
+

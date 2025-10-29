@@ -28,7 +28,23 @@ export const loginAsync = createAsyncThunk(
       const response = await AuthService.login(email, password);
       return response.user;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Login failed');
+      // Gestion spécifique des erreurs réseau
+      if (error.code === 'ERR_NETWORK' || error.message?.includes('Network Error')) {
+        return rejectWithValue(
+          'Erreur de connexion réseau. Vérifiez que:\n' +
+          '• Le backend est démarré (port 8080)\n' +
+          '• Pour USB: exécutez "adb reverse tcp:8080 tcp:8080"\n' +
+          '• Pour WiFi: assurez-vous que le téléphone est sur le même réseau'
+        );
+      }
+      
+      // Erreur serveur avec réponse
+      if (error.response?.data?.message) {
+        return rejectWithValue(error.response.data.message);
+      }
+      
+      // Erreur générique
+      return rejectWithValue('Erreur de connexion. Veuillez réessayer.');
     }
   }
 );
@@ -40,7 +56,23 @@ export const registerAsync = createAsyncThunk(
       const response = await AuthService.register(data);
       return response.message;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Registration failed');
+      // Gestion spécifique des erreurs réseau
+      if (error.code === 'ERR_NETWORK' || error.message?.includes('Network Error')) {
+        return rejectWithValue(
+          'Erreur de connexion réseau. Vérifiez que:\n' +
+          '• Le backend est démarré (port 8080)\n' +
+          '• Pour USB: exécutez "adb reverse tcp:8080 tcp:8080"\n' +
+          '• Pour WiFi: assurez-vous que le téléphone est sur le même réseau'
+        );
+      }
+      
+      // Erreur serveur avec réponse
+      if (error.response?.data?.message) {
+        return rejectWithValue(error.response.data.message);
+      }
+      
+      // Erreur générique
+      return rejectWithValue('Erreur lors de l\'inscription. Veuillez réessayer.');
     }
   }
 );

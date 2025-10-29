@@ -499,3 +499,4 @@ Si ça fonctionne avec des données hardcodées, le problème vient du backend o
 ---
 
 **🔍 Une fois les logs ajoutés, partagez-moi les résultats et on trouvera le problème exact !**
+

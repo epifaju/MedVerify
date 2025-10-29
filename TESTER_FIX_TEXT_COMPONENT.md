@@ -127,3 +127,4 @@ LOG  📊 État mis à jour: {"error": null, "loading": false, "pharmaciesCount"
 ```
 
 **SANS l'erreur "Text strings must be rendered within a <Text> component"**
+

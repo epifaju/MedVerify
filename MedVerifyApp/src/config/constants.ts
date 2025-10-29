@@ -2,9 +2,10 @@
  * Constantes de configuration de l'application
  */
 
-// Pour appareil physique : utiliser l'IP du PC (192.168.1.16)
+// Pour appareil physique connecté via USB : utiliser localhost (avec adb reverse)
+// Pour appareil physique sur WiFi : utiliser l'IP du PC (192.168.1.16)
 // Pour émulateur Android : utiliser 10.0.2.2
-export const API_BASE_URL = process.env.API_BASE_URL || 'http://192.168.1.16:8080/api/v1';
+export const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:8080/api/v1';
 
 export const API_TIMEOUT = 10000; // 10 seconds
 

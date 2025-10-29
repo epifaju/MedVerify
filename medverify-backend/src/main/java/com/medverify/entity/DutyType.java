@@ -19,3 +19,4 @@ public enum DutyType {
         return description;
     }
 }
+

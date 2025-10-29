@@ -92,3 +92,4 @@ public class OnDutySchedule {
         return !today.isBefore(startDate) && !today.isAfter(endDate) && Boolean.TRUE.equals(isActive);
     }
 }
+

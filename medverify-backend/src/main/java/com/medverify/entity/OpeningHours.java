@@ -40,3 +40,4 @@ public class OpeningHours implements Serializable {
         };
     }
 }
+

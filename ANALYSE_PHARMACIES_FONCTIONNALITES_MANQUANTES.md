@@ -622,3 +622,4 @@ mvn spring-boot:run
 ---
 
 **🚀 Prochaine étape suggérée :** Implémenter la carte interactive avec MapView
+

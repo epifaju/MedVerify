@@ -186,3 +186,4 @@ LOG  📤 Message envoyé à WebView: { pharmaciesCount: 3, ... }
 ---
 
 **🚀 L'app devrait se recharger automatiquement. Vérifiez que l'erreur a disparu !**
+

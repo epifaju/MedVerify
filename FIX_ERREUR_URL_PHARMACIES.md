@@ -94,3 +94,4 @@ Tous les endpoints devraient commencer par `/` sans `/api/v1`.
 ## ✅ C'est corrigé !
 
 L'onglet Pharmacies devrait maintenant charger correctement les données.
+

@@ -447,3 +447,4 @@ MedVerifyApp/MedVerifyExpo/src/
 
 **Développé avec ❤️ pour MedVerify - Guinée-Bissau**  
 **Date : 14 octobre 2025**
+

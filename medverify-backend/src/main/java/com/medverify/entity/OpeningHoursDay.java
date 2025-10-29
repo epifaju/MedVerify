@@ -77,3 +77,4 @@ public class OpeningHoursDay implements Serializable {
         return false;
     }
 }
+

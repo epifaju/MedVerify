@@ -337,3 +337,4 @@ Pour tester, il faut :
 **Le GTIN s'affichera correctement dès qu'il y aura des données !** 🎉
 
 
+

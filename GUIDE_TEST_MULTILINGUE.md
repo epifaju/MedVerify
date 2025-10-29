@@ -269,3 +269,4 @@ Si vous trouvez un texte non traduit, c'est un bug à signaler !
 L'application est maintenant **100% multilingue** et prête pour la Guinée-Bissau ! 🇬🇼🇵🇹🇫🇷
 
 
+

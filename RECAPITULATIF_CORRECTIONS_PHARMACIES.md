@@ -241,3 +241,4 @@ Tous les guides de correction sont disponibles :
 ---
 
 **🚀 La fonctionnalité Pharmacies est maintenant 100% fonctionnelle !**
+

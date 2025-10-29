@@ -349,3 +349,4 @@ MedVerifyApp/MedVerifyExpo/src/
 ---
 
 **🎉 Avec ces 3 fonctionnalités, la feature Pharmacies sera 100% complète !**
+

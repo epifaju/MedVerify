@@ -308,3 +308,4 @@ cd C:\Users\epifa\cursor-workspace\MedVerify\MedVerifyApp\MedVerifyExpo && npx e
 
 **Backend** : http://localhost:8080  
 **Frontend** : Expo Go (Scanner QR code)
+

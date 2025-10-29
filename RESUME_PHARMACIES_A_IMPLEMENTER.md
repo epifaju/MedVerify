@@ -236,3 +236,4 @@ npx expo start --clear
 - Carte : 2-3h
 - Notifications : 3-4h
 - Notation : 4-5h
+

@@ -411,3 +411,4 @@ Le changement de langue fonctionne **instantanément** sur **tous les écrans**,
 **Mission accomplie !** 🎉🚀
 
 
+

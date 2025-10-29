@@ -37,3 +37,4 @@ COMMENT ON COLUMN verification_codes.max_attempts IS 'Nombre maximum de tentativ
 
 
 
+

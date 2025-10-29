@@ -427,3 +427,4 @@ viewToggle: {
 ```bash
 npx expo start --clear
 ```
+

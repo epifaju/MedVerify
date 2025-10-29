@@ -28,7 +28,25 @@ export const loginAsync = createAsyncThunk(
       const response = await AuthService.login(email, password);
       return response.user;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Login failed');
+      // Gestion améliorée des erreurs réseau
+      if (error.code === 'ERR_NETWORK' || error.message?.includes('Network Error')) {
+        return rejectWithValue(
+          'Erreur de connexion réseau. Vérifiez que:\n' +
+          '1. Le backend est démarré sur http://192.168.1.16:8080\n' +
+          '2. Votre téléphone est sur le même réseau WiFi\n' +
+          '3. Le firewall Windows autorise les connexions sur le port 8080'
+        );
+      }
+      
+      if (error.response?.data?.message) {
+        return rejectWithValue(error.response.data.message);
+      }
+      
+      if (error.message) {
+        return rejectWithValue(`Erreur: ${error.message}`);
+      }
+      
+      return rejectWithValue('Erreur de connexion. Veuillez réessayer.');
     }
   }
 );

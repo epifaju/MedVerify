@@ -46,3 +46,5 @@ COMMENT ON VIEW medication_identifiers IS 'Vue de correspondance entre les diff√
 
 
 
+
+

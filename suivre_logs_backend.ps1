@@ -8,3 +8,4 @@ Get-Content -Path "medverify-backend\logs\medverify.log" -Tail 10 -Wait
 
 
 
+

@@ -224,3 +224,4 @@ npx expo start
 ---
 
 **Le bon projet Expo est maintenant lancé ! 🚀✅**
+

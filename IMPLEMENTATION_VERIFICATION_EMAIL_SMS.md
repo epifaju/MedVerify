@@ -823,3 +823,4 @@ Pour ajouter la vérification SMS (Twilio) :
 **Implémentation terminée ! La vérification email avec code à 6 chiffres est opérationnelle ! 📧✅**
 
 
+

@@ -395,3 +395,4 @@ LOG  📊 État mis à jour: { loading: false, pharmaciesCount: 3, ... }
 ---
 
 **🚀 Toutes les corrections sont appliquées. L'application devrait se recharger automatiquement ou appuyez sur `r` dans le terminal Expo !**
+
