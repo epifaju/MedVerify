@@ -35,7 +35,6 @@
     "declarationMap": true,
     "sourceMap": true
   },
-  "extends": "@react-native/typescript-config/tsconfig.json",
   "include": ["src/**/*"],
   "exclude": [
     "node_modules",

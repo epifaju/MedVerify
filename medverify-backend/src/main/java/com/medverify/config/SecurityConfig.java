@@ -68,6 +68,9 @@ public class SecurityConfig {
                         .requestMatchers("/actuator/health", "/actuator/info").permitAll()
                         .requestMatchers("/swagger-ui/**", "/api-docs/**", "/swagger-ui.html").permitAll()
 
+                        // Pharmacies : accessibles à tous (public)
+                        .requestMatchers("/api/v1/pharmacies/**").permitAll()
+
                         // Endpoints authentifiés
                         .requestMatchers("/api/v1/medications/**")
                         .hasAnyRole("PATIENT", "PHARMACIST", "AUTHORITY", "ADMIN")
@@ -88,7 +91,18 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
+
+        // Parse les origines autorisées
+        List<String> origins = Arrays.asList(allowedOrigins.split(","));
+
+        // Pour React Native : si "*" est présent, autoriser toutes les origines
+        // Sinon, utiliser la liste spécifique
+        if (origins.contains("*")) {
+            configuration.setAllowedOriginPatterns(List.of("*"));
+        } else {
+            configuration.setAllowedOrigins(origins);
+        }
+
         configuration.setAllowedMethods(Arrays.asList(allowedMethods.split(",")));
         configuration.setAllowedHeaders(Arrays.asList(allowedHeaders.split(",")));
         configuration.setExposedHeaders(Arrays.asList(exposedHeaders.split(",")));
@@ -118,4 +132,3 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 }
-

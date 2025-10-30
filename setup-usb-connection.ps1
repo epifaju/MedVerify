@@ -79,3 +79,5 @@ Write-Host "   - Redémarrez ADB" -ForegroundColor White
 Write-Host "   - Redémarrez le téléphone" -ForegroundColor White
 Write-Host ""
 
+
+

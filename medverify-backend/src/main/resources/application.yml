@@ -203,6 +203,12 @@ springdoc:
     tagsSorter: alpha
   show-actuator: true
 
+# Cloud Storage Configuration
+cloud-storage:
+  provider: ${STORAGE_PROVIDER:local} # local, s3, gcs
+  bucket-name: ${STORAGE_BUCKET:medverify-uploads}
+  base-url: ${BASE_URL:http://localhost:8080}
+
 ---
 # Profile: Development
 spring:

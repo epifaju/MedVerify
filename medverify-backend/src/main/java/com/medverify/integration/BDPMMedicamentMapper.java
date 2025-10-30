@@ -5,8 +5,6 @@ import com.medverify.integration.dto.BDPMMedicamentResponse;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,8 +14,6 @@ import java.util.stream.Collectors;
  */
 @Component
 public class BDPMMedicamentMapper {
-
-    private static final DateTimeFormatter BDPM_DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     /**
      * Convertit une réponse BDPM en entité Medication

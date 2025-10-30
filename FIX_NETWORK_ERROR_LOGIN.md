@@ -245,3 +245,5 @@ Si le problème persiste après toutes ces vérifications :
 - L'amélioration de la gestion d'erreurs vous donnera maintenant des messages plus clairs
 - Si vous voyez le nouveau message d'erreur détaillé, suivez les étapes indiquées
 - Le problème est généralement lié au réseau/firewall, pas au code de l'application
+
+

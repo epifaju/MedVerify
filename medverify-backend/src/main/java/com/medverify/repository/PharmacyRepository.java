@@ -2,6 +2,7 @@ package com.medverify.repository;
 
 import com.medverify.entity.Pharmacy;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,7 @@ import java.util.UUID;
  * Repository pour gérer les pharmacies avec support PostGIS
  */
 @Repository
-public interface PharmacyRepository extends JpaRepository<Pharmacy, UUID> {
+public interface PharmacyRepository extends JpaRepository<Pharmacy, UUID>, JpaSpecificationExecutor<Pharmacy> {
 
     // Recherche par ville
     List<Pharmacy> findByCityIgnoreCaseAndIsActiveTrue(String city);
@@ -93,4 +94,16 @@ public interface PharmacyRepository extends JpaRepository<Pharmacy, UUID> {
             @Param("longitude") double longitude,
             @Param("radiusMeters") double radiusMeters,
             @Param("limit") int limit);
+
+    // Méthodes pour statistiques admin
+    Long countByIsActiveTrue();
+
+    Long countByIsVerifiedTrue();
+
+    Long countByIs24hTrue();
+
+    Long countByIsNightPharmacyTrue();
+
+    // Vérifier existence
+    boolean existsByLicenseNumber(String licenseNumber);
 }

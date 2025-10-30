@@ -189,3 +189,5 @@ Avant de tester la connexion, vérifiez :
 ## 🎉 Résultat Attendu
 
 Après ces corrections, la connexion devrait fonctionner et vous ne devriez plus voir l'erreur `Network Error`. Le message d'erreur amélioré que nous avons ajouté vous aidera également à diagnostiquer tout problème futur.
+
+

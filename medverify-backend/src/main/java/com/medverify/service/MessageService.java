@@ -29,7 +29,8 @@ public class MessageService {
      * @return Message traduit
      */
     public String get(String key) {
-        return get(key, null);
+        Locale locale = LocaleContextHolder.getLocale();
+        return messageSource.getMessage(key, new Object[0], key, locale);
     }
 
     /**
@@ -74,8 +75,3 @@ public class MessageService {
         return LocaleContextHolder.getLocale().getLanguage();
     }
 }
-
-
-
-
-

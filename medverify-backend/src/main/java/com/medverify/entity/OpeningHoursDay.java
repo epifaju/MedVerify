@@ -17,6 +17,7 @@ import java.time.LocalTime;
 @Builder
 public class OpeningHoursDay implements Serializable {
 
+    @Builder.Default
     private Boolean closed = false;
 
     // Horaires matin
@@ -77,4 +78,3 @@ public class OpeningHoursDay implements Serializable {
         return false;
     }
 }
-

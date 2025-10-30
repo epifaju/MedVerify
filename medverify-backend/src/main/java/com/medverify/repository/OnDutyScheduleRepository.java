@@ -2,6 +2,7 @@ package com.medverify.repository;
 
 import com.medverify.entity.OnDutySchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,8 @@ import java.util.UUID;
  * Repository pour gérer les plannings de garde
  */
 @Repository
-public interface OnDutyScheduleRepository extends JpaRepository<OnDutySchedule, UUID> {
+public interface OnDutyScheduleRepository
+        extends JpaRepository<OnDutySchedule, UUID>, JpaSpecificationExecutor<OnDutySchedule> {
 
     /**
      * Trouver gardes actives pour une date
@@ -82,4 +84,30 @@ public interface OnDutyScheduleRepository extends JpaRepository<OnDutySchedule, 
                 ORDER BY s.startDate DESC
             """)
     List<OnDutySchedule> findActiveSchedulesByPharmacy(@Param("pharmacyId") UUID pharmacyId);
+
+    /**
+     * Trouver gardes par pharmacie (toutes, pas seulement actives)
+     */
+    @Query("""
+                SELECT s FROM OnDutySchedule s
+                WHERE s.pharmacy.id = :pharmacyId
+                ORDER BY s.startDate DESC
+            """)
+    List<OnDutySchedule> findByPharmacyIdOrderByStartDateDesc(@Param("pharmacyId") UUID pharmacyId);
+
+    /**
+     * Trouver gardes chevauchantes pour une pharmacie
+     */
+    @Query("""
+                SELECT s FROM OnDutySchedule s
+                WHERE s.pharmacy.id = :pharmacyId
+                AND s.isActive = true
+                AND (
+                    (s.startDate <= :endDate AND s.endDate >= :startDate)
+                )
+            """)
+    List<OnDutySchedule> findOverlappingSchedules(
+            @Param("pharmacyId") UUID pharmacyId,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate);
 }

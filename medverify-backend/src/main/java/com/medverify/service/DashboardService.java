@@ -215,7 +215,8 @@ public class DashboardService {
                 List<Object[]> serialSpikes = scanHistoryRepository.findSerialNumberSpikes(start, end, 10);
 
                 for (Object[] row : serialSpikes) {
-                        String serialNumber = (String) row[0];
+                        @SuppressWarnings("unused")
+                        String serialNumber = (String) row[0]; // Utilisé pour debug si nécessaire
                         Long count = (Long) row[1];
                         String medicationName = (String) row[2];
 
