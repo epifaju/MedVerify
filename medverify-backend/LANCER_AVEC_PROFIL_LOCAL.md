@@ -34,7 +34,7 @@ mvn spring-boot:run -Dspring-boot.run.profiles=local
 **Windows PowerShell :**
 
 ```powershell
-$env:DB_PASSWORD="Malagueta7"
+$env:DB_PASSWORD="VOTRE_MOT_DE_PASSE_POSTGRESQL"
 cd medverify-backend
 mvn spring-boot:run
 ```
@@ -42,7 +42,7 @@ mvn spring-boot:run
 **Windows CMD :**
 
 ```cmd
-set DB_PASSWORD=Malagueta7
+set DB_PASSWORD=VOTRE_MOT_DE_PASSE_POSTGRESQL
 cd medverify-backend
 mvn spring-boot:run
 ```
@@ -54,10 +54,10 @@ mvn spring-boot:run
 Modifier `medverify-backend/src/main/resources/application.yml` :
 
 ```yaml
-password: ${DB_PASSWORD:Malagueta7}
+password: ${DB_PASSWORD:VOTRE_MOT_DE_PASSE_POSTGRESQL}
 ```
 
-Remplacez `Malagueta7` par votre vrai mot de passe PostgreSQL.
+**Remplacez `VOTRE_MOT_DE_PASSE_POSTGRESQL` par votre vrai mot de passe PostgreSQL.**
 
 ## Vérification
 
@@ -75,5 +75,5 @@ The server requested SCRAM-based authentication, but no password was provided.
 
 ## Note
 
-Le fichier `application-local.yml` contient déjà le mot de passe `Malagueta7`.
-Vérifiez que c'est bien le bon mot de passe de votre base PostgreSQL.
+Le fichier `application-local.yml` peut contenir le mot de passe en local pour développement.
+⚠️ **JAMAIS** de mot de passe réel dans le dépôt Git !

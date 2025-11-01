@@ -169,6 +169,14 @@ app:
     authority-emails: ${AUTHORITY_EMAILS:admin@medverify.gw}
     suspicious-alert-enabled: true
 
+  # Rate Limiting Configuration
+  rate-limit:
+    login-per-minute: 5 # Limite de tentatives de connexion par IP
+    register-per-minute: 3 # Limite d'inscriptions par IP
+    verify-email-per-minute: 10 # Limite de vérifications email par IP
+    medication-verify-per-hour: 100 # Limite de vérifications médicaments par IP (non authentifié)
+    general-per-minute: 60 # Limite générale pour autres endpoints
+
 # External API Configuration
 external-api:
   # API-Medicaments.fr (Base de données publique française)

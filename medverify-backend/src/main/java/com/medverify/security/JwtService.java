@@ -1,10 +1,11 @@
 package com.medverify.security;
 
+import com.medverify.config.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +20,31 @@ import java.util.function.Function;
  * Service de gestion des tokens JWT
  */
 @Service
+@RequiredArgsConstructor
 public class JwtService {
 
-    @Value("${jwt.secret}")
-    private String secret;
+    private final JwtProperties jwtProperties;
 
-    @Value("${jwt.expiration}")
-    private Long expiration;
+    /**
+     * Récupère le secret JWT depuis les propriétés validées
+     */
+    private String getSecret() {
+        return jwtProperties.getSecret();
+    }
 
-    @Value("${jwt.refresh-expiration}")
-    private Long refreshExpiration;
+    /**
+     * Récupère la durée d'expiration du token access
+     */
+    private Long getExpiration() {
+        return jwtProperties.getExpiration();
+    }
+
+    /**
+     * Récupère la durée d'expiration du refresh token
+     */
+    private Long getRefreshExpiration() {
+        return jwtProperties.getRefreshExpiration();
+    }
 
     /**
      * Génère un access token JWT
@@ -36,14 +52,14 @@ public class JwtService {
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", userDetails.getAuthorities().iterator().next().getAuthority());
-        return createToken(claims, userDetails.getUsername(), expiration);
+        return createToken(claims, userDetails.getUsername(), getExpiration());
     }
 
     /**
      * Génère un refresh token JWT
      */
     public String generateRefreshToken(UserDetails userDetails) {
-        return createToken(new HashMap<>(), userDetails.getUsername(), refreshExpiration);
+        return createToken(new HashMap<>(), userDetails.getUsername(), getRefreshExpiration());
     }
 
     /**
@@ -114,7 +130,7 @@ public class JwtService {
      * Récupère la clé de signature
      */
     private Key getSigningKey() {
-        byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
+        byte[] keyBytes = getSecret().getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
