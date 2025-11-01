@@ -51,7 +51,13 @@ public class DashboardService {
                                 .stream()
                                 .collect(Collectors.toMap(
                                                 row -> (VerificationStatus) row[0],
-                                                row -> (Long) row[1]));
+                                                row -> {
+                                                        // FIX: Handle Number type from JPA aggregation
+                                                        Object countObj = row[1];
+                                                        return countObj instanceof Number
+                                                                        ? ((Number) countObj).longValue()
+                                                                        : 0L;
+                                                }));
 
                 Long authentic = statusCounts.getOrDefault(VerificationStatus.AUTHENTIC, 0L);
                 Long suspicious = statusCounts.getOrDefault(VerificationStatus.SUSPICIOUS, 0L);
@@ -163,13 +169,21 @@ public class DashboardService {
 
                 return suspiciousScans.stream()
                                 .limit(10)
-                                .map(row -> DashboardStatsResponse.TopCounterfeitMedication.builder()
-                                                .medicationName((String) row[2])
-                                                .gtin((String) row[3]) // Récupération du GTIN depuis la requête
-                                                .reportCount((Long) row[1])
-                                                .lastReported(Instant.now())
-                                                .build())
-                                .toList();
+                                .map(row -> {
+                                        // FIX: Handle Number type from JPA aggregation
+                                        Object countObj = row[1];
+                                        Long count = countObj instanceof Number
+                                                        ? ((Number) countObj).longValue()
+                                                        : 0L;
+
+                                        return DashboardStatsResponse.TopCounterfeitMedication.builder()
+                                                        .medicationName((String) row[2])
+                                                        .gtin((String) row[3]) // Récupération du GTIN depuis la requête
+                                                        .reportCount(count)
+                                                        .lastReported(Instant.now())
+                                                        .build();
+                                })
+                                .collect(Collectors.toList());
         }
 
         /**
@@ -257,7 +271,10 @@ public class DashboardService {
                 // Utiliser findByStatus pour récupérer tous les scans suspects
                 // Note: findByStatus ne supporte pas Pageable directement,
                 // donc on applique la pagination manuellement
-                List<ScanHistory> allScans = scanHistoryRepository.findByStatus(VerificationStatus.SUSPICIOUS);
+                List<ScanHistory> scansFromDB = scanHistoryRepository.findByStatus(VerificationStatus.SUSPICIOUS);
+                
+                // FIX: Copy to mutable list to avoid UnsupportedOperationException
+                List<ScanHistory> allScans = new ArrayList<>(scansFromDB);
                 
                 // Trier par date décroissante (les plus récents en premier)
                 allScans.sort((s1, s2) -> s2.getScannedAt().compareTo(s1.getScannedAt()));

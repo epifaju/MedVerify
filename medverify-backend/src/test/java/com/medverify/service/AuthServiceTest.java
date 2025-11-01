@@ -99,8 +99,16 @@ class AuthServiceTest {
         // Given
         when(userRepository.existsByEmail(registerRequest.getEmail())).thenReturn(false);
         when(passwordEncoder.encode(anyString())).thenReturn("$2a$12$encodedPassword");
-        when(userRepository.save(any(User.class))).thenReturn(testUser);
-        doNothing().when(emailVerificationService).createEmailVerificationCode(any(User.class));
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        
+        // Mock VerificationCode retourné par createEmailVerificationCode
+        com.medverify.entity.VerificationCode verificationCode = com.medverify.entity.VerificationCode.builder()
+                .id(UUID.randomUUID())
+                .user(testUser)
+                .code("123456")
+                .type(com.medverify.entity.VerificationCode.VerificationType.EMAIL)
+                .build();
+        when(emailVerificationService.createEmailVerificationCode(any(User.class))).thenReturn(verificationCode);
 
         // When
         var response = authService.register(registerRequest);
@@ -166,15 +174,18 @@ class AuthServiceTest {
         // Given
         when(userRepository.findByEmail(loginRequest.getEmail())).thenReturn(Optional.of(testUser));
         when(passwordEncoder.matches(loginRequest.getPassword(), testUser.getPassword())).thenReturn(false);
-        when(userRepository.save(any(User.class))).thenReturn(testUser);
+        
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> {
+            User savedUser = invocation.getArgument(0);
+            assertThat(savedUser.getFailedLoginAttempts()).isEqualTo(1);
+            return savedUser;
+        });
 
         // When / Then
         assertThatThrownBy(() -> authService.login(loginRequest))
                 .isInstanceOf(InvalidCredentialsException.class);
         
         verify(userRepository).save(any(User.class));
-        assertThat(testUser.getFailedLoginAttempts()).isEqualTo(0); // Avant l'appel
-        // Après l'appel, l'attribut devrait être incrémenté dans le mock
     }
 
     @Test
