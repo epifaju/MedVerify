@@ -24,9 +24,32 @@ public interface ScanHistoryRepository extends JpaRepository<ScanHistory, UUID> 
 
         /**
          * Compte les scans d'un numéro de série
+         * @deprecated Utiliser countUniqueUsersBySerialAndGtin pour une détection plus précise
          */
         @Query("SELECT COUNT(s) FROM ScanHistory s WHERE s.serialNumber = :serialNumber")
         Long countBySerialNumber(@Param("serialNumber") String serialNumber);
+
+        /**
+         * Compte le nombre d'utilisateurs uniques ayant scanné un numéro de série pour un GTIN donné
+         * dans une période donnée, en excluant l'utilisateur actuel.
+         * Utilisé pour détecter les numéros de série dupliqués (contrefaçons).
+         *
+         * @param serialNumber Le numéro de série à vérifier
+         * @param gtin Le GTIN du médicament
+         * @param periodStart Date de début de la période (ex: 30 derniers jours)
+         * @param excludeUserId L'ID de l'utilisateur à exclure (utilisateur actuel qui scanne)
+         * @return Le nombre d'utilisateurs uniques ayant scanné ce numéro de série
+         */
+        @Query("SELECT COUNT(DISTINCT s.user.id) FROM ScanHistory s " +
+                        "WHERE s.serialNumber = :serialNumber " +
+                        "AND s.gtin = :gtin " +
+                        "AND s.scannedAt >= :periodStart " +
+                        "AND s.user.id != :excludeUserId")
+        Long countUniqueUsersBySerialAndGtin(
+                        @Param("serialNumber") String serialNumber,
+                        @Param("gtin") String gtin,
+                        @Param("periodStart") Instant periodStart,
+                        @Param("excludeUserId") UUID excludeUserId);
 
         /**
          * Compte les scans dans une période

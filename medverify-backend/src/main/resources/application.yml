@@ -164,7 +164,11 @@ app:
 
   # Verification Configuration
   verification:
-    duplicate-threshold: 5 # Number of scans before flagging as duplicate
+    # Ancien seuil (déprécié - conservé pour compatibilité)
+    duplicate-threshold: 5 # Number of scans before flagging as duplicate (old logic)
+    # Nouvelle logique de détection des doublons
+    duplicate-threshold-users: 3 # Nombre d'utilisateurs uniques nécessaires pour déclencher l'alerte
+    duplicate-period-days: 30 # Période en jours pour considérer les scans (30 derniers jours)
     confidence-threshold: 0.3 # Minimum confidence for AUTHENTIC status (0.3 pour dev, 0.7 pour prod)
 
   # Notification Configuration

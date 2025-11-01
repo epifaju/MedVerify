@@ -28,6 +28,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Service de vérification d'authenticité des médicaments
@@ -50,6 +51,12 @@ public class MedicationVerificationService {
 
         @Value("${app.verification.duplicate-threshold:5}")
         private int duplicateThreshold;
+
+        @Value("${app.verification.duplicate-threshold-users:3}")
+        private int duplicateThresholdUsers;
+
+        @Value("${app.verification.duplicate-period-days:30}")
+        private int duplicatePeriodDays;
 
         @Value("${app.verification.confidence-threshold:0.7}")
         private double confidenceThreshold;
@@ -143,7 +150,12 @@ public class MedicationVerificationService {
                         VerificationResponse response;
 
                         if (medication != null) {
-                                response = analyzeAuthenticity(medication, request);
+                                // Récupérer l'utilisateur pour l'exclure du comptage des doublons
+                                User currentUser = userRepository.findByEmail(username)
+                                                .orElse(null);
+                                UUID currentUserId = currentUser != null ? currentUser.getId() : null;
+
+                                response = analyzeAuthenticity(medication, request, currentUserId);
                                 response.setVerificationId(java.util.UUID.randomUUID());
                                 response.setVerifiedAt(java.time.Instant.now());
                                 response.setVerificationSource(verificationSource);
@@ -154,6 +166,17 @@ public class MedicationVerificationService {
                                 // Notifier si suspect
                                 if (response.getStatus() == VerificationStatus.SUSPICIOUS) {
                                         notifySuspicious(medication, request);
+                                        // Métrique : médicament marqué comme suspect
+                                        meterRegistry.counter("medication.verification.suspicious",
+                                                        "gtin", request.getGtin(),
+                                                        "confidence", String.format("%.2f", response.getConfidence()))
+                                                .increment();
+                                } else {
+                                        // Métrique : médicament authentique
+                                        meterRegistry.counter("medication.verification.authentic",
+                                                        "gtin", request.getGtin(),
+                                                        "confidence", String.format("%.2f", response.getConfidence()))
+                                                .increment();
                                 }
 
                         } else {
@@ -266,8 +289,13 @@ public class MedicationVerificationService {
 
         /**
          * Analyse l'authenticité du médicament
+         *
+         * @param medication Le médicament à vérifier
+         * @param request La requête de vérification
+         * @param currentUserId L'ID de l'utilisateur actuel (pour l'exclure du comptage des doublons)
+         * @return La réponse de vérification
          */
-        private VerificationResponse analyzeAuthenticity(Medication medication, VerificationRequest request) {
+        private VerificationResponse analyzeAuthenticity(Medication medication, VerificationRequest request, UUID currentUserId) {
                 List<VerificationResponse.Alert> alerts = new ArrayList<>();
                 double confidence = 1.0;
 
@@ -281,17 +309,40 @@ public class MedicationVerificationService {
                         confidence -= 0.5;
                 }
 
-                // Règle 2 : Numéro de série dupliqué
-                if (request.getSerialNumber() != null) {
-                        Long duplicateCount = scanHistoryRepository.countBySerialNumber(request.getSerialNumber());
-                        if (duplicateCount >= duplicateThreshold) {
+                // Règle 2 : Numéro de série dupliqué (nouvelle logique améliorée)
+                if (request.getSerialNumber() != null && currentUserId != null) {
+                        // Calculer la date de début de la période
+                        Instant periodStart = Instant.now().minus(duplicatePeriodDays, ChronoUnit.DAYS);
+
+                        // Compter les utilisateurs uniques ayant scanné ce numéro de série
+                        // pour ce GTIN dans la période, en excluant l'utilisateur actuel
+                        Long uniqueUsersCount = scanHistoryRepository.countUniqueUsersBySerialAndGtin(
+                                        request.getSerialNumber(),
+                                        request.getGtin(),
+                                        periodStart,
+                                        currentUserId);
+
+                        if (uniqueUsersCount >= duplicateThresholdUsers) {
                                 alerts.add(VerificationResponse.Alert.builder()
                                                 .severity("HIGH")
                                                 .code("SERIAL_DUPLICATE")
-                                                .message(String.format("Numéro de série scanné %d fois (seuil : %d)",
-                                                                duplicateCount, duplicateThreshold))
+                                                .message(String.format(
+                                                                "Numéro de série scanné par %d utilisateur(s) différent(s) pour ce médicament (seuil : %d, période : %d jours)",
+                                                                uniqueUsersCount, duplicateThresholdUsers, duplicatePeriodDays))
                                                 .build());
                                 confidence -= 0.6;
+
+                                // Métrique : détection de doublon avec nouvelle logique
+                                meterRegistry.counter("medication.duplicate.detected",
+                                                "gtin", request.getGtin(),
+                                                "users_count", String.valueOf(uniqueUsersCount))
+                                                .increment();
+                        } else if (uniqueUsersCount > 0) {
+                                // Métrique : doublon détecté mais sous le seuil (pas d'alerte)
+                                meterRegistry.counter("medication.duplicate.under_threshold",
+                                                "gtin", request.getGtin(),
+                                                "users_count", String.valueOf(uniqueUsersCount))
+                                                .increment();
                         }
                 }
 
