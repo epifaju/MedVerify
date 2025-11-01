@@ -11,7 +11,19 @@ import java.nio.file.Paths;
 
 /**
  * Service pour gérer l'upload de fichiers vers cloud storage
- * Pour MVP : implémenter stockage local ou S3
+ * 
+ * Implémentation actuelle :
+ * - Stockage local : Fonctionnel (développement/test)
+ * - S3 (AWS) : Non implémenté - utilise fallback local
+ * 
+ * TODO Futures améliorations (Issue #TBD) :
+ * - Implémenter upload S3 avec AWS SDK v2
+ * - Implémenter upload Google Cloud Storage (optionnel)
+ * - Implémenter upload Azure Blob Storage (optionnel)
+ * - Ajouter support CDN pour fichiers uploadés
+ * - Ajouter validation de taille/type de fichier
+ * 
+ * @see <a href="https://github.com/medverify/medverify-backend/issues">Issues GitHub</a>
  */
 @Service
 @Slf4j
@@ -28,7 +40,11 @@ public class CloudStorageService {
 
     /**
      * Upload fichier vers cloud storage
-     * Pour MVP : implémenter stockage local ou S3
+     * 
+     * @param fileData Contenu du fichier en bytes
+     * @param fileName Nom du fichier
+     * @param contentType Type MIME du fichier
+     * @return URL publique du fichier uploadé
      */
     public String uploadFile(byte[] fileData, String fileName, String contentType) {
 
@@ -41,17 +57,29 @@ public class CloudStorageService {
 
     /**
      * Upload vers S3 (AWS SDK)
+     * 
+     * ⚠️ NON IMPLÉMENTÉ - Utilise fallback vers stockage local
+     * 
+     * Pour implémenter :
+     * 1. Ajouter dépendance Maven : aws-java-sdk-s3
+     * 2. Configurer credentials AWS (variables d'environnement ou IAM role)
+     * 3. Décommenter et adapter le code ci-dessous
+     * 
+     * Code d'exemple (à adapter) :
+     * <pre>
+     * AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
+     * ObjectMetadata metadata = new ObjectMetadata();
+     * metadata.setContentType(contentType);
+     * metadata.setContentLength(fileData.length);
+     * s3Client.putObject(bucketName, fileName, new ByteArrayInputStream(fileData), metadata);
+     * return s3Client.getUrl(bucketName, fileName).toString();
+     * </pre>
+     * 
+     * @see <a href="https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/s3-examples.html">AWS SDK S3 Documentation</a>
      */
     private String uploadToS3(byte[] fileData, String fileName, String contentType) {
-        // TODO: Implémenter avec AWS SDK S3
-        // AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
-        // ObjectMetadata metadata = new ObjectMetadata();
-        // metadata.setContentType(contentType);
-        // s3Client.putObject(bucketName, fileName, new ByteArrayInputStream(fileData),
-        // metadata);
-        // return s3Client.getUrl(bucketName, fileName).toString();
-
-        log.warn("S3 upload not implemented, using local storage");
+        log.warn("S3 upload not implemented (provider: {}), using local storage fallback", provider);
+        log.info("To implement S3 upload, see CloudStorageService.uploadToS3() documentation");
         return uploadToLocal(fileData, fileName);
     }
 
@@ -79,9 +107,38 @@ public class CloudStorageService {
 
     /**
      * Supprimer fichier
+     * 
+     * ⚠️ IMPLÉMENTATION PARTIELLE - Seulement pour stockage local
+     * 
+     * TODO Futures améliorations (Issue #TBD) :
+     * - Implémenter suppression S3
+     * - Implémenter suppression autres providers
+     * - Ajouter validation de l'URL
+     * - Ajouter logging d'audit
+     * 
+     * @param fileUrl URL du fichier à supprimer
      */
     public void deleteFile(String fileUrl) {
-        // TODO: Implémenter suppression selon provider
-        log.info("Delete file: {}", fileUrl);
+        if ("s3".equalsIgnoreCase(provider)) {
+            log.warn("S3 delete not implemented, skipping deletion of: {}", fileUrl);
+            return;
+        }
+        
+        // Implémentation pour stockage local
+        try {
+            // Extraire le nom du fichier de l'URL
+            String fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
+            Path filePath = Paths.get("uploads/pharmacies", fileName);
+            
+            if (Files.exists(filePath)) {
+                Files.delete(filePath);
+                log.info("File deleted successfully: {}", fileName);
+            } else {
+                log.warn("File not found for deletion: {}", fileName);
+            }
+        } catch (IOException e) {
+            log.error("Error deleting file: {}", e.getMessage(), e);
+            // Ne pas lever d'exception pour éviter de bloquer l'application
+        }
     }
 }
