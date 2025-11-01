@@ -2,6 +2,7 @@ package com.medverify.controller;
 
 import com.medverify.dto.response.DashboardStatsResponse;
 import com.medverify.dto.response.ReportResponse;
+import com.medverify.dto.response.SuspiciousScanResponse;
 import com.medverify.entity.ReportStatus;
 import com.medverify.service.DashboardService;
 import com.medverify.service.ReportService;
@@ -18,6 +19,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -68,5 +70,18 @@ public class DashboardController {
         ReportResponse.ReportDetailsResponse response = reportService.updateReportStatus(
                 id, status, notes, currentUser.getUsername());
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/dashboard/suspicious-scans")
+    @PreAuthorize("hasAnyRole('AUTHORITY', 'ADMIN')")
+    @Operation(
+            summary = "Get list of suspicious medication scans",
+            description = "Récupère la liste des scans de médicaments suspects avec pagination."
+    )
+    public ResponseEntity<List<SuspiciousScanResponse>> getSuspiciousScans(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size) {
+        List<SuspiciousScanResponse> scans = dashboardService.getSuspiciousScans(page, size);
+        return ResponseEntity.ok(scans);
     }
 }

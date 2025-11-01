@@ -1,7 +1,9 @@
 package com.medverify.service;
 
 import com.medverify.dto.response.DashboardStatsResponse;
+import com.medverify.dto.response.SuspiciousScanResponse;
 import com.medverify.entity.ReportStatus;
+import com.medverify.entity.ScanHistory;
 import com.medverify.entity.VerificationStatus;
 import com.medverify.repository.ReportRepository;
 import com.medverify.repository.ScanHistoryRepository;
@@ -9,6 +11,7 @@ import com.medverify.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -242,5 +245,33 @@ public class DashboardService {
         private Long totalScans(Instant start, Instant end) {
                 Long scans = scanHistoryRepository.countScansBetween(start, end);
                 return scans > 0 ? scans : 100L; // Minimum 100 pour éviter division par 0
+        }
+
+        /**
+         * Récupère les scans suspects avec pagination
+         */
+        @Transactional(readOnly = true)
+        public List<SuspiciousScanResponse> getSuspiciousScans(int page, int size) {
+                log.info("Fetching suspicious scans - page: {}, size: {}", page, size);
+                
+                // Utiliser findByStatus pour récupérer tous les scans suspects
+                // Note: findByStatus ne supporte pas Pageable directement,
+                // donc on applique la pagination manuellement
+                List<ScanHistory> allScans = scanHistoryRepository.findByStatus(VerificationStatus.SUSPICIOUS);
+                
+                // Trier par date décroissante (les plus récents en premier)
+                allScans.sort((s1, s2) -> s2.getScannedAt().compareTo(s1.getScannedAt()));
+                
+                // Appliquer la pagination
+                int start = page * size;
+                int end = Math.min(start + size, allScans.size());
+                
+                if (start >= allScans.size()) {
+                        return new ArrayList<>();
+                }
+
+                return allScans.subList(start, end).stream()
+                                .map(SuspiciousScanResponse::fromScanHistory)
+                                .collect(Collectors.toList());
         }
 }
