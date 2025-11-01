@@ -75,3 +75,5 @@ Envoyez-moi:
 1. Les résultats de l'écran Debug
 2. OU un screenshot des logs Metro
 
+
+

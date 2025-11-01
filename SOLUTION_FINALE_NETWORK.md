@@ -185,3 +185,5 @@ Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
 
 *Redémarrer le backend et recharger l'application mobile* ✅
 
+
+

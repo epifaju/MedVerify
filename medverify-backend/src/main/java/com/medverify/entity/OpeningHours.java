@@ -29,15 +29,28 @@ public class OpeningHours implements Serializable {
      * Obtenir les horaires pour un jour de la semaine
      */
     public OpeningHoursDay getDay(DayOfWeek dayOfWeek) {
-        return switch (dayOfWeek) {
-            case MONDAY -> monday;
-            case TUESDAY -> tuesday;
-            case WEDNESDAY -> wednesday;
-            case THURSDAY -> thursday;
-            case FRIDAY -> friday;
-            case SATURDAY -> saturday;
-            case SUNDAY -> sunday;
-        };
+        if (dayOfWeek == null) {
+            return null;
+        }
+        
+        switch (dayOfWeek) {
+            case MONDAY:
+                return monday;
+            case TUESDAY:
+                return tuesday;
+            case WEDNESDAY:
+                return wednesday;
+            case THURSDAY:
+                return thursday;
+            case FRIDAY:
+                return friday;
+            case SATURDAY:
+                return saturday;
+            case SUNDAY:
+                return sunday;
+            default:
+                return null;
+        }
     }
 }
 

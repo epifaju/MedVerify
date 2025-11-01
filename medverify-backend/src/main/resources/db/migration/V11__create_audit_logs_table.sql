@@ -28,3 +28,5 @@ COMMENT ON COLUMN audit_logs.new_value IS 'Valeur JSON de l entité après modif
 
 
 
+
+

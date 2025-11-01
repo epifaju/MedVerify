@@ -122,3 +122,5 @@ adb reverse --list
 Ensuite, dans `constants.ts`, utilisez `http://localhost:8080/api/v1` pour Android.
 
 
+
+

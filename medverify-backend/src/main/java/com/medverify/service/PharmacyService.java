@@ -111,6 +111,16 @@ public class PharmacyService {
         }
 
         /**
+         * Récupérer toutes les pharmacies actives
+         */
+        public List<PharmacyDTO> findAllActivePharmacies() {
+                List<Pharmacy> pharmacies = pharmacyRepository.findByIsActiveTrueOrderByNameAsc();
+                return pharmacies.stream()
+                                .map(this::convertToDTO)
+                                .collect(Collectors.toList());
+        }
+
+        /**
          * Obtenir détails pharmacie
          */
         public PharmacyDTO getPharmacyDetails(UUID pharmacyId) {

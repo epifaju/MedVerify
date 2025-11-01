@@ -98,3 +98,5 @@ Si erreur → Problème réseau/WiFi
 
 Envoyez-moi le résultat du test navigateur mobile!
 
+
+

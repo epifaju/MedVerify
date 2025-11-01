@@ -247,3 +247,5 @@ Si le problème persiste après toutes ces vérifications :
 - Le problème est généralement lié au réseau/firewall, pas au code de l'application
 
 
+
+

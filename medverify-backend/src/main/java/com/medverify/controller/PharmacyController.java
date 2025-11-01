@@ -79,8 +79,10 @@ public class PharmacyController {
             pharmacies = pharmacyService.find24hPharmacies();
             log.info("Found {} 24h pharmacies", pharmacies.size());
         } else {
-            log.warn("Invalid search request: no valid search criteria provided");
-            return ResponseEntity.badRequest().build();
+            // Aucun critère spécifique - retourner toutes les pharmacies actives
+            log.info("No specific search criteria - returning all active pharmacies");
+            pharmacies = pharmacyService.findAllActivePharmacies();
+            log.info("Found {} active pharmacies", pharmacies.size());
         }
 
         // Filtrer par services si spécifié
@@ -156,6 +158,18 @@ public class PharmacyController {
         log.info("Fetching all 24h pharmacies");
         List<PharmacyDTO> pharmacies = pharmacyService.find24hPharmacies();
         log.info("Found {} 24h pharmacies", pharmacies.size());
+        return ResponseEntity.ok(pharmacies);
+    }
+
+    /**
+     * Obtenir toutes les pharmacies actives
+     * GET /api/v1/pharmacies/all
+     */
+    @GetMapping("/all")
+    public ResponseEntity<List<PharmacyDTO>> getAllPharmacies() {
+        log.info("Fetching all active pharmacies");
+        List<PharmacyDTO> pharmacies = pharmacyService.findAllActivePharmacies();
+        log.info("Found {} active pharmacies", pharmacies.size());
         return ResponseEntity.ok(pharmacies);
     }
 }

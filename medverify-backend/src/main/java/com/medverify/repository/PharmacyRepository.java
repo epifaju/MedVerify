@@ -31,6 +31,10 @@ public interface PharmacyRepository extends JpaRepository<Pharmacy, UUID>, JpaSp
     // Par propriétaire (pharmacien)
     List<Pharmacy> findByOwnerIdAndIsActiveTrue(UUID ownerId);
 
+    // Toutes les pharmacies actives
+    @Query("SELECT p FROM Pharmacy p WHERE p.isActive = true ORDER BY p.name ASC")
+    List<Pharmacy> findByIsActiveTrueOrderByNameAsc();
+
     // REQUÊTES GÉOSPATIALES avec PostGIS
 
     /**

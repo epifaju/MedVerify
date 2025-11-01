@@ -236,3 +236,5 @@ Pour toute question:
 
 L'application MedVerify est maintenant opérationnelle et prête pour développement!
 
+
+

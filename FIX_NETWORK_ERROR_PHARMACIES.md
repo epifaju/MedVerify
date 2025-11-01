@@ -90,3 +90,5 @@ Après avoir modifié `constants.ts`, vous devez redémarrer l'app Expo :
 3. Recharger l'app sur l'émulateur/appare masyarakatil
 
 
+
+

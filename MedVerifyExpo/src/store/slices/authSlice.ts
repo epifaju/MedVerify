@@ -25,16 +25,32 @@ export const loginAsync = createAsyncThunk(
   'auth/login',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {
+      console.log('🔐 Tentative de connexion avec:', email);
       const response = await AuthService.login(email, password);
       return response.user;
     } catch (error: any) {
-      // Gestion spécifique des erreurs réseau
-      if (error.code === 'ERR_NETWORK' || error.message?.includes('Network Error')) {
+      console.error('❌ Erreur de connexion:', error);
+      
+      // Gestion spécifique des erreurs réseau améliorées
+      if (error.isNetworkError || error.code === 'NO_NETWORK') {
         return rejectWithValue(
-          'Erreur de connexion réseau. Vérifiez que:\n' +
-          '• Le backend est démarré (port 8080)\n' +
+          error.message || 
+          'Aucune connexion réseau disponible. Vérifiez votre connexion internet.'
+        );
+      }
+      
+      // Erreurs réseau classiques
+      if (error.code === 'ERR_NETWORK' || error.message?.includes('Network Error') || error.code === 'ECONNABORTED' || error.code === 'ETIMEDOUT') {
+        // Utiliser le message amélioré de l'ApiClient si disponible
+        if (error.message && error.message.includes('Impossible de se connecter au serveur')) {
+          return rejectWithValue(error.message);
+        }
+        return rejectWithValue(
+          'Impossible de se connecter au serveur. Vérifiez que:\n' +
+          '• Le backend est démarré et accessible\n' +
+          '• Votre téléphone et votre PC sont sur le même réseau WiFi\n' +
           '• Pour USB: exécutez "adb reverse tcp:8080 tcp:8080"\n' +
-          '• Pour WiFi: assurez-vous que le téléphone est sur le même réseau'
+          '• Attendez quelques secondes et réessayez'
         );
       }
       
@@ -43,8 +59,15 @@ export const loginAsync = createAsyncThunk(
         return rejectWithValue(error.response.data.message);
       }
       
-      // Erreur générique
-      return rejectWithValue('Erreur de connexion. Veuillez réessayer.');
+      // Erreur d'authentification
+      if (error.response?.status === 401) {
+        return rejectWithValue('Email ou mot de passe incorrect.');
+      }
+      
+      // Erreur générique avec message d'origine si disponible
+      return rejectWithValue(
+        error.message || 'Erreur de connexion. Veuillez réessayer.'
+      );
     }
   }
 );
@@ -56,13 +79,26 @@ export const registerAsync = createAsyncThunk(
       const response = await AuthService.register(data);
       return response.message;
     } catch (error: any) {
-      // Gestion spécifique des erreurs réseau
-      if (error.code === 'ERR_NETWORK' || error.message?.includes('Network Error')) {
+      // Gestion spécifique des erreurs réseau améliorées
+      if (error.isNetworkError || error.code === 'NO_NETWORK') {
         return rejectWithValue(
-          'Erreur de connexion réseau. Vérifiez que:\n' +
-          '• Le backend est démarré (port 8080)\n' +
+          error.message || 
+          'Aucune connexion réseau disponible. Vérifiez votre connexion internet.'
+        );
+      }
+      
+      // Erreurs réseau classiques
+      if (error.code === 'ERR_NETWORK' || error.message?.includes('Network Error') || error.code === 'ECONNABORTED' || error.code === 'ETIMEDOUT') {
+        // Utiliser le message amélioré de l'ApiClient si disponible
+        if (error.message && error.message.includes('Impossible de se connecter au serveur')) {
+          return rejectWithValue(error.message);
+        }
+        return rejectWithValue(
+          'Impossible de se connecter au serveur. Vérifiez que:\n' +
+          '• Le backend est démarré et accessible\n' +
+          '• Votre téléphone et votre PC sont sur le même réseau WiFi\n' +
           '• Pour USB: exécutez "adb reverse tcp:8080 tcp:8080"\n' +
-          '• Pour WiFi: assurez-vous que le téléphone est sur le même réseau'
+          '• Attendez quelques secondes et réessayez'
         );
       }
       
@@ -71,8 +107,10 @@ export const registerAsync = createAsyncThunk(
         return rejectWithValue(error.response.data.message);
       }
       
-      // Erreur générique
-      return rejectWithValue('Erreur lors de l\'inscription. Veuillez réessayer.');
+      // Erreur générique avec message d'origine si disponible
+      return rejectWithValue(
+        error.message || 'Erreur lors de l\'inscription. Veuillez réessayer.'
+      );
     }
   }
 );

@@ -317,3 +317,5 @@ Toutes les fonctionnalités ont été implémentées correctement:
 
 *Toutes les fonctionnalités CRUD Pharmacies sont opérationnelles* ✅
 
+
+

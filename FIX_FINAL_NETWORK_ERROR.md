@@ -184,3 +184,5 @@ Puis revenir à `localhost` dans `constants.ts`.
 
 *L'application est maintenant opérationnelle avec connexion backend fonctionnelle ✅*
 
+
+
